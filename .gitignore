@@ -1,0 +1,11 @@
+.DS_Store
+*.pyc
+*.jpg
+*.png
+*.gif
+*.jpeg
+*.BMP
+email_templates.py
+application.py
+config.py
+tools.py

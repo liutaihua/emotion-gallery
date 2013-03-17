@@ -1,0 +1,45 @@
+$def with(u, pf, num_results, fav_count, images, authors)
+$var page_title : $u.nickname
+
+<div class="container">
+
+        <div class="pull-left">
+            $if u.avatarPath:
+                $ src = '/static/upload/image' + u.avatarPath + '_160.jpg'
+                <img src="$src" alt="" />
+            $else:
+                <img src="/static/public/img/default_128x128.jpg" alt="" />
+        </div>
+        <div class="span9">
+            <h1>$u.nickname</h1>
+            $if pf and pf.address:
+                <p>地址：$pf.address</p>
+            <p>$u.joinTime 加入</p>
+        </div>
+
+
+    <div class="tabbable" style="margin-top:30px;"> <!-- Only required for left/right tabs -->
+        <ul class="nav nav-tabs">
+            <li><a target="_blank" title="查看ta的豆瓣页面" href="/member/$u.username" data-toggle="tab">截图($num_results)</a></li>
+            <li class="active"><a target="_blank" title="查看ta的豆瓣页面" href="/member/$u.username/favorite" data-toggle="tab">喜欢($fav_count)</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="tab1">
+                <div class="tab-pane active" id="tab1">
+                $if images:
+                    <ul class="thumbnails" style="margin:10px 0 0 0;">
+                    $for i in xrange(len(images)):
+                        <li>
+                            <a href="/photo/$images[i].id">
+                                <img src="$images[i].path=s160-c" />
+                            </a>
+                            <p>$authors[i].nickname上传 | $images[i].favo_num人喜欢</p>
+                        </li>
+                    </ul>
+                $else:
+                    <p>还没有喜欢的图片 :(</p>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
