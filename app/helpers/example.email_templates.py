@@ -11,20 +11,16 @@ from email.Header import Header
 web.config.smtp_server = 'smtp.gmail.com'
 web.config.smtp_port = 587
 #smtp_username = 'cookbook@gmail.com'
-web.config.smtp_username = 'help@biubiubiubiu.com'
-web.config.smtp_password = 'paloalto-3859675'
+web.config.smtp_username = ''
+web.config.smtp_password = ''
 web.config.smtp_starttls = True
 
 # _from = config.mail_sender
-_from = 'Biu <help@biubiubiubiu.com>'
+_from = 'Biu'
 # _from = None
 
-bcc = 'J.Y.Han <ihanjiyun@gmail.com>' #暗抄送 # 
-ieatdouban = 'ieatdouban <ieatdouban@gmail.com>'
-ihanjiyun = 'J.Y.Han <ihanjiyun@gmail.com>'
-naoyeye = 'naoyeye@gmail.com'
-sober =  'Sober <sober.zhou@gmail.com>'
-yihanghsu = 'Yihang Hsu <ehanghsu@gmail.com>'
+bcc = '' #暗抄送 # 
+sober =  'xx@gmail.com'
 
 #=========
 
@@ -73,7 +69,7 @@ msg_change_email = \
 
 你在 Biu 更改了邮箱，为了验证新邮箱的真实性，我们给你发了这封邮件，请点击下面的链接来确认这是你的邮箱。
 
-http://www.biubiubiubiu.com/welcome/confirm_email/$token
+http://yyu.me/welcome/confirm_email/$token
 
 该链接地址24小时内打开有效。
 
@@ -123,7 +119,7 @@ body{font-size:12px;font-family: 'Helvetica Neue',Arial,'Liberation Sans',FreeSa
 
 <p>Ta的豆瓣地址为： http://www.douban.com/people/$apply_user.username</p>
 <p>申请时间 $apply_time</p>
-<p>你可以登录Biu管理后台访问 http://www.biubiubiubiu.com/admin/apply_for_permission 来处理。</p>
+<p>你可以登录Biu管理后台访问 http://yyu.me/admin/apply_for_permission 来处理。</p>
 —— Biu
 </body>
 </html>
@@ -145,7 +141,7 @@ apply_failed = \
                   <tbody>
                     <tr height="145">
                       <td align="right" style="vertical-align:middle;padding-right:98px">
-                        <a target="_blank" href="http://www.biubiubiubiu.com" style="display:inline-block;font-weight:normal;text-decoration:none;font-size:14px;color:#eee;width:50px;font-size:13px">去Biu</a>
+                        <a target="_blank" href="http://yyu.me" style="display:inline-block;font-weight:normal;text-decoration:none;font-size:14px;color:#eee;width:50px;font-size:13px">去Biu</a>
                       </td>
                     </tr>
                     <tr height="100">
@@ -159,7 +155,7 @@ apply_failed = \
                     </tr>
                     <tr height="216" align="center">
                       <td>
-                          <div style="padding-bottom:30px;line-height:27px"><a target="_blank" href="http://www.biubiubiubiu.com/" style="font-weight:normal;text-decoration:none;color:#eee;font-size:22px">访问Biu</a></div>
+                          <div style="padding-bottom:30px;line-height:27px"><a target="_blank" href="http://yyu.me/" style="font-weight:normal;text-decoration:none;color:#eee;font-size:22px">访问Biu</a></div>
                         <div style="line-height:15px"><span style="color:#eee;font-size:13px;line-height:15px;font-weight:normal">阅读<span style="padding:0 3px">•</span>观看<span style="padding:0 3px">•</span>思考<span style="padding:0 3px">•</span>交流</span></div>
                       </td>
                     </tr>
@@ -203,7 +199,7 @@ apply_success = \
                   <tbody>
                     <tr height="145">
                       <td align="right" style="vertical-align:middle;padding-right:98px">
-                        <a target="_blank" href="http://www.biubiubiubiu.com" style="display:inline-block;font-weight:normal;text-decoration:none;font-size:14px;color:#eee;width:50px;font-size:13px">去Biu</a>
+                        <a target="_blank" href="http://yyu.me" style="display:inline-block;font-weight:normal;text-decoration:none;font-size:14px;color:#eee;width:50px;font-size:13px">去Biu</a>
                       </td>
                     </tr>
                     <tr height="100">
@@ -217,7 +213,7 @@ apply_success = \
                     </tr>
                     <tr height="216" align="center">
                       <td>
-                          <div style="padding-bottom:30px;line-height:27px"><a target="_blank" href="http://www.biubiubiubiu.com/" style="font-weight:normal;text-decoration:none;color:#eee;font-size:22px">访问Biu</a></div>
+                          <div style="padding-bottom:30px;line-height:27px"><a target="_blank" href="http://yyu.me/" style="font-weight:normal;text-decoration:none;color:#eee;font-size:22px">访问Biu</a></div>
                         <div style="line-height:15px"><span style="color:#eee;font-size:13px;line-height:15px;font-weight:normal">阅读<span style="padding:0 3px">•</span>观看<span style="padding:0 3px">•</span>思考<span style="padding:0 3px">•</span>交流</span></div>
                       </td>
                     </tr>
@@ -270,7 +266,7 @@ new_user_email = \
                           <span style="font-size:22px;line-height:40px;font-weight:bold">$user.nickname :</span><br/><br/>
                           很高兴你能注册 Biu ! 为了验证邮箱的真实性，防止有人恶意注册，以及方便你收到别人对你的回复，我们给你发了这封邮件，请点击下面的链接来确认这是你的邮箱。<br/>
                           <p style="font-size:12px;margin:10px 0 0 0;font-weight:normal;padding:0;color:#fff">
-                            http://www.biubiubiubiu.com/welcome/confirm_email/$token</p>
+                            http://yyu.me/welcome/confirm_email/$token</p>
                           <p style="line-height:1.78">
                             如果上面的链接无法点击，请复制到地址栏中打开。<br/>
                             该链接地址24小时内打开有效。<br/>
@@ -327,7 +323,7 @@ body{font-size:12px;font-family: 'Helvetica Neue',Arial,'Liberation Sans',FreeSa
 <p>Ta的豆瓣地址为： http://www.douban.com/people/$user.username</p>
 <p>反馈内容：</p> 
 <blockquote>$content</blockquote>
-<p>你可以登录Biu管理后台访问 http://www.biubiubiubiu.com/admin/feedback 来处理。</p>
+<p>你可以登录Biu管理后台访问 http://yyu.me/admin/feedback 来处理。</p>
 —— Biu
 </body>
 </html>
@@ -348,12 +344,12 @@ $if post.postTitle == '':
 $else:
     $ title = post.postTitle
 Hi，$author.nickname :
-<a href="http://www.biubiubiubiu.com/member/$user.username">
+<a href="http://yyu.me/member/$user.username">
     <img src="$user.avatarPath">
 </a>
-<a href="http://www.biubiubiubiu.com/member/$user.username">$user.nickname </a>
+<a href="http://yyu.me/member/$user.username">$user.nickname </a>
 
-喜欢了你的片段 <a href="http://www.biubiubiubiu.com/post/$post.id?ntf_type=2#action_block">$title</a>
+喜欢了你的片段 <a href="http://yyu.me/post/$post.id?ntf_type=2#action_block">$title</a>
 
 —— Biu
 </body>
@@ -375,12 +371,12 @@ $if post.postTitle == '':
 $else:
     $ title = post.postTitle
 Hi，$author.nickname :
-<a href="http://www.biubiubiubiu.com/member/$user.username">
+<a href="http://yyu.me/member/$user.username">
     <img src="$user.avatarPath">
 </a>
-<a href="http://www.biubiubiubiu.com/member/$user.username">$user.nickname </a>
+<a href="http://yyu.me/member/$user.username">$user.nickname </a>
 
-评论了你的片段 <a href="http://www.biubiubiubiu.com/post/$post.id?ntf_type=1#postCommentForm">$title</a>
+评论了你的片段 <a href="http://yyu.me/post/$post.id?ntf_type=1#postCommentForm">$title</a>
 
 —— Biu
 </body>
@@ -402,12 +398,12 @@ $if post.postTitle == '':
 $else:
     $ title = post.postTitle
 Hi，$nodeAuthor.nickname :
-<a href="http://www.biubiubiubiu.com/member/$user.username">
+<a href="http://yyu.me/member/$user.username">
     <img src="$user.avatarPath">
 </a>
-<a href="http://www.biubiubiubiu.com/member/$user.username">$user.nickname </a>
+<a href="http://yyu.me/member/$user.username">$user.nickname </a>
 
-在你创建的话题 <a href="http://www.biubiubiubiu.com/node/$node.id">$node.nodeName</a> 中发布了新片段 <a href="http://www.biubiubiubiu.com/post/$post.id">$title</a>
+在你创建的话题 <a href="http://yyu.me/node/$node.id">$node.nodeName</a> 中发布了新片段 <a href="http://yyu.me/post/$post.id">$title</a>
 
 —— Biu
 </body>
