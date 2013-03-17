@@ -59,8 +59,6 @@ def douban_callback(user_info):
     s.avatarPath = user_info['avatar']
     s.city = user_info.get('loc_name')
     s.desc = user_info.get('desc')
-    print 3333333333333,s.id
-    print 3333333333333,s.douban_id
 
 def clear_douban_callback():
     s = get_session()
