@@ -41,7 +41,7 @@ $var page_title : 最新的20个片段
                                     <h1>$post.postTitle</h1>
                                 $if post.postTemp != 3 and post.postTemp != 4 and post.postTemp != 5:
                                     <p class="snippet">
-                                    $post.postArticle[0:850].replace(r'<br/>', '')
+                                    $post.postArticle.decode('utf8')[0:850].replace(r'<br/>', '')
                                     </p>
                                 <div class="gradient"></div>
                             </div>

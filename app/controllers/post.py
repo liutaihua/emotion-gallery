@@ -228,7 +228,6 @@ class post_single:
                 ntf_posts = None
                 ntf_users = None
 
-            print 222222222222222, comments
             return view.base(view.post_single(rights, node, post, post_author_info, user, timestrf, likers_list, comments, commenters, ntf_type, is_voted, misc), user, siteName, rights, ntf_list, notification_num, ntf_posts, ntf_users)
         else:
             raise web.notfound()

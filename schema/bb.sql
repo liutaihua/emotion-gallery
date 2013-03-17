@@ -121,7 +121,7 @@ CREATE TABLE `_node` (
   `postMount` int(11) DEFAULT '1',
   `creation_ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -194,7 +194,7 @@ CREATE TABLE `_post` (
   `postImage` varchar(200) DEFAULT NULL,
   `postTitle` varchar(200) DEFAULT NULL,
   `postCaption` varchar(300) DEFAULT NULL,
-  `postArticle` varchar(100) DEFAULT NULL,
+  `postArticle` varchar(10000) DEFAULT NULL,
   `postAuthor` varchar(200) DEFAULT NULL,
   `postTemp` int(11) DEFAULT NULL,
   `nodeId` int(11) DEFAULT NULL,
@@ -203,9 +203,9 @@ CREATE TABLE `_post` (
   `magnitude` int(11) DEFAULT '0',
   `postMount` int(11) DEFAULT NULL,
   `creation_ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `comment_num` int(11) DEFAULT NULL,
+  `comment_num` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -222,7 +222,7 @@ CREATE TABLE `_post_comments` (
   `content` varchar(500) DEFAULT NULL,
   `creation_ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -297,4 +297,4 @@ CREATE TABLE `users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-03-17 12:49:45
+-- Dump completed on 2013-03-17 21:00:32
