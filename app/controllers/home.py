@@ -3,7 +3,8 @@
 
 import web
 import random
-import md5, time, datetime
+import time, datetime
+from hashlib import md5
 from config import view, site_name
 from app.helpers import session , email_templates
 #from app.helpers.utils import sort_dict_by_multi_key
