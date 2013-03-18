@@ -8,7 +8,7 @@ import datetime
 import urllib
 import collections
 from config import view, site_name, db
-from app.helpers import session
+from app.common import session
 from app.models import users
 
 siteName = site_name

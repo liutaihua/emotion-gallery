@@ -12,7 +12,7 @@ import web
 import re
 from web.net import htmlquote
 from config import view, site_name
-from app.helpers import session, utils, misc, email_templates
+from app.common import session, utils, misc, email_templates
 from app.models import postModel, nodeModel, users, notification
 
 siteName = site_name
@@ -342,25 +342,24 @@ class new_post_comment:
         reg_regchar = '@([a-zA-Z0-9][\w\-\.\_]+)'
         comment = data.postComment
         comment = htmlquote(comment).strip().replace("\r\n", "<br/>")
-        usernames = re.findall(reg_regchar, comment)
+        username_list = re.findall(reg_regchar, comment)
         nicknames = []
-        nickname_list = []
         mid_list = []
 
         # @提醒
-        for i in xrange(len(usernames)):
-            if not users.is_username_available(usernames[i]):
-                nicknames += users.get_user_by_username(usernames[i]).nickname.replace(' ', '&nbsp;').split()
-                comment = comment.replace('@'+ usernames[i], '@<a href="/member/'+ usernames[i] +'">' + nicknames[i] + '</a>')
+        for username in username_list:
+            index = username_list.index(username)
+            #username = username.decode('utf8')
+            if not users.is_username_available(username):
+                nicknames += users.get_user_by_username(username).nickname.replace(' ', '&nbsp;').split()
+                nicknames = [x.decode('utf8') for x in nicknames]
+                comment = comment.replace(u'@'+ username, u'@<a href="/member/'+ username + u'">' + nicknames[index] + u'</a>')
                 #得到@的用户id 以|分割组成字符串
-                mid_list += str(users.get_user_by_username(usernames[i]).id).split()
-                #去重
-                mid_list = sorted(set(mid_list),key=mid_list.index)
-                #以字符串形势保存@到的uid，以|分割
-                # mention_id_list = '|'.join(mid_list)
+                mid_list += str(users.get_user_by_username(username).id).split()
+                mid_list = sorted(set(mid_list))
             else:
-                nicknames += usernames[i].split()
-                comment = comment.replace('@'+ usernames[i], '@' + nicknames[i])
+                nicknames.append(username)
+                comment = comment.replace('@'+ username, '@' + nicknames[index])
 
         # @提醒
         for mid in mid_list:

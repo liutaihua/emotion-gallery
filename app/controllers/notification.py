@@ -3,7 +3,7 @@
 
 import web
 from config import view, site_name
-from app.helpers import session
+from app.common import session
 from app.models import notification
 
 siteName = site_name

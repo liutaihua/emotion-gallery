@@ -9,8 +9,8 @@ import datetime
 import web
 
 from app.models import users
-from app.helpers import session
-from app.helpers import email_templates
+from app.common import session
+from app.common import email_templates
 
 from config import view, site_name, db
 

@@ -5,7 +5,7 @@ import web
 # import socket
 from config import db
 from web.net import htmlquote
-from app.helpers import misc
+from app.common import misc
 
 #创建片段
 def newPost(postImage, postTitle, postCaption, postArticle, postAuthor, postTemp, nodeId):

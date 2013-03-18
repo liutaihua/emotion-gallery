@@ -6,8 +6,8 @@ import random
 import time, datetime
 from hashlib import md5
 from config import view, site_name
-from app.helpers import session , email_templates
-#from app.helpers.utils import sort_dict_by_multi_key
+from app.common import session , email_templates
+#from app.common.utils import sort_dict_by_multi_key
 from app.models import users, image, admin, postModel, nodeModel, notification
 
 siteName = site_name
