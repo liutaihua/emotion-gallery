@@ -3,8 +3,8 @@
 import web
 from config import db
 
-from app.helpers import utils
-from app.helpers import email_templates
+from app.common import utils
+from app.common import email_templates
 
 from cStringIO import StringIO
 from datetime import date

@@ -16,8 +16,8 @@ from web import form
 
 from app.models import applicants, postModel, users, notification
 
-from app.helpers import session, utils
-from app.helpers import email_templates
+from app.common import session, utils
+from app.common import email_templates
 from config import view, site_name, encryption_key
 
 

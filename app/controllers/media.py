@@ -7,8 +7,8 @@ import datetime
 
 from config import view, site_name, site_domain
 
-from app.helpers import session
-from app.helpers import paging
+from app.common import session
+from app.common import paging
 
 from app.models import users
 from app.models import image

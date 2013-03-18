@@ -5,7 +5,7 @@ import datetime
 import web
 
 from app.models import help
-from app.helpers import session, email_templates
+from app.common import session, email_templates
 from config import view, site_name
 
 user = session.get_session()

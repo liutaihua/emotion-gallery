@@ -1,7 +1,7 @@
 body{background:#f5f5f5;}
 #landingWrapper{height:100%;width:100%;position: absolute;left:0;top:0;/*background:url(/static/public/img/6.jpg) 0 0 fixed no-repeat;*/background-size: cover;text-align: center;}
 #landingMain{height:100%;margin:0 auto;float: none;position: relative;width: 500px;}
-#landingLogo{padding-top: 100px;position: relative;}
+#landingLogo{padding-top: 80px;position: relative;}
 #landingLogo h1{text-indent: -999em;height: 0}
 #version{
     background: none repeat scroll 0 0 #EEEEEE;

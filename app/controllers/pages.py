@@ -3,7 +3,7 @@
 
 import web
 from config import view, site_name, site_domain
-from app.helpers import session
+from app.common import session
 from app.models import users
 
 user = session.get_session()

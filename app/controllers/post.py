@@ -12,7 +12,7 @@ import web
 import re
 from web.net import htmlquote
 from config import view, site_name
-from app.helpers import session, utils, misc, email_templates
+from app.common import session, utils, misc, email_templates
 from app.models import postModel, nodeModel, users, notification
 
 siteName = site_name
