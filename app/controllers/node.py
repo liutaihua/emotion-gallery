@@ -49,59 +49,54 @@ class node_image():
     @session.login_required
     def POST(self):
         cgi.maxlen = 2 * 1024 * 1024 # 限制2MB
-        try:
-            x = web.input(uploadImg={})
-            homedir = os.getcwd()
-            filedir = '%s/static/upload/node_img' %homedir #图片存放路径
+        x = web.input(uploadImg={})
+        homedir = os.getcwd()
+        filedir = '%s/static/upload/node_img' %homedir #图片存放路径
 
-            if 'uploadImg' in x: # to check if the file-object is created
-                filepath = x.uploadImg.filename.replace('\\','/') # replaces the windows-style slashes with linux ones.
-                filename = filepath.split('/')[-1] # splits the and chooses the last part (the filename with extension) #获取文件名
-                ext = filename.split('.', -1)[-1] #获取后缀
-                if ext == 'jpg' or ext == 'gif' or ext == 'jpeg' or ext == 'png' or ext == 'JPG':
-                    now = datetime.datetime.now()
-                    
-                    d_path = filedir + '/%d/%d/%d' %(now.year, now.month, now.day)
-                    if not os.path.exists(d_path):
-                        os.makedirs(d_path) #创建当前日期目录
+        if 'uploadImg' in x: # to check if the file-object is created
+            filepath = x.uploadImg.filename.replace('\\','/') # replaces the windows-style slashes with linux ones.
+            filename = filepath.split('/')[-1] # splits the and chooses the last part (the filename with extension) #获取文件名
+            ext = filename.split('.', -1)[-1] #获取后缀
+            if ext == 'jpg' or ext == 'gif' or ext == 'jpeg' or ext == 'png' or ext == 'JPG':
+                now = datetime.datetime.now()
+                
+                d_path = filedir + '/%d/%d/%d' %(now.year, now.month, now.day)
+                if not os.path.exists(d_path):
+                    os.makedirs(d_path) #创建当前日期目录
 
-                    t = '%d%d%d%d%d%d' %(now.year, now.month, now.day, now.hour, now.minute, now.second)                    
-                    all = list('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSQUVWXYZ')
-                    randStr = ''
-                    for i in range(10):
-                        index = random.randint(0,len(all)-1)
-                        randStr = randStr + all[index] #生成10位随机数
-                    authKey = hashlib.md5(randStr + user.username).hexdigest()
-                    filename = t + '_' + authKey + '.' + ext #以时间+authKey作为文件名
-                    
-                    fout = open(d_path + '/' + filename,'wb') # creates the file where the uploaded file should be stored
-                    fout.write(x.uploadImg.file.read()) # writes the uploaded file to the newly created file.
-                    fout.close() # closes the file, upload complete.
+                t = '%d%d%d%d%d%d' %(now.year, now.month, now.day, now.hour, now.minute, now.second)                    
+                all = list('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSQUVWXYZ')
+                randStr = ''
+                for i in range(10):
+                    index = random.randint(0,len(all)-1)
+                    randStr = randStr + all[index] #生成10位随机数
+                authKey = hashlib.md5(randStr + user.username).hexdigest()
+                filename = t + '_' + authKey + '.' + ext #以时间+authKey作为文件名
+                
+                fout = open(d_path + '/' + filename,'wb') # creates the file where the uploaded file should be stored
+                fout.write(x.uploadImg.file.read()) # writes the uploaded file to the newly created file.
+                fout.close() # closes the file, upload complete.
 
-                    im = Image.open(d_path + '/' + filename)
-                    width, height = im.size #判断比例
-                    if width/height > 5 or height/width > 5 :
-                        os.remove(d_path + '/' + filename) #删除图片
-                        scale = "s"
-                        return scale
-                    else:
-                        path = d_path + '/' + filename #for thumb
-                        utils.make_node_thumb(path) #创建75x75缩略图
-                        os.remove(d_path + '/' + filename) #删除原始图片
-                        mid_src = '/static/upload/node_img/%d/%d/%d/' %(now.year, now.month, now.day) + t + '_' + authKey + '_75.jpg'
-
-                        # user_id = user.id
-                       
-                        # users.save_user_avatar(user_id, avatar)#入库
-                        #session.reset()
-                        return mid_src
-
+                im = Image.open(d_path + '/' + filename)
+                width, height = im.size #判断比例
+                if width/height > 5 or height/width > 5 :
+                    os.remove(d_path + '/' + filename) #删除图片
+                    scale = "s"
+                    return scale
                 else:
-                    return '上传格式仅支持jpg/png/gif/jpeg'
+                    path = d_path + '/' + filename #for thumb
+                    utils.make_node_thumb(path) #创建75x75缩略图
+                    os.remove(d_path + '/' + filename) #删除原始图片
+                    mid_src = '/static/upload/node_img/%d/%d/%d/' %(now.year, now.month, now.day) + t + '_' + authKey + '_75.jpg'
 
-        except ValueError:
-            overflow = "o"
-            return overflow
+                    # user_id = user.id
+                   
+                    # users.save_user_avatar(user_id, avatar)#入库
+                    #session.reset()
+                    return mid_src
+
+            else:
+                return '上传格式仅支持jpg/png/gif/jpeg'
 
 #ajax 删除话题节点图片
 class delete_node_image:

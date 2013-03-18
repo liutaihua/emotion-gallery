@@ -6,6 +6,7 @@ import random
 import md5, time, datetime
 from config import view, site_name
 from app.helpers import session , email_templates
+#from app.helpers.utils import sort_dict_by_multi_key
 from app.models import users, image, admin, postModel, nodeModel, notification
 
 siteName = site_name
@@ -16,33 +17,24 @@ class index:
         # foo = web.cookies(cookieName=defaultValue)
         # foo.age
         if user.is_logged:
-            # u_n = str(user.username)
-            # u = users.get_user_by_username(u_n)
-            # return view.base(view.home(user, u), user, siteName)
             rec_posts = admin.get_rec_posts()
-            # if rec_posts:
             postList = []
-            for i in xrange(len(rec_posts)):
-                postList += postModel.getPostsByPostId(rec_posts[i].pid)
+            if len(rec_posts) > 20:
+                map(lambda x:postList.extend(postModel.getPostsByPostId(x.pid)), rec_posts)
+            else:
+                postList = list(postModel.getRecent20Posts())
 
-            a = []
-            for post in postList:
-                a += str(post.postAuthor).split()
+            #postList = sort_dict_by_multi_key(postList, ['magnitude', 'creation_ts'], reverse=True)
+            postList = sorted(postList, key=lambda x:x.creation_ts, reverse=True)
+                
 
             authors = []
-            for i in xrange(len(a)):
-                authors += users.get_users_by_id(a[i])
-
-            n= []
-            for post in postList:
-                n += str(post.nodeId).split()
+            map(lambda x:authors.extend(users.get_users_by_id(x)), [x.postAuthor for x in postList])
 
             nodes = []
-            for i in xrange(len(n)):
-                nodes += nodeModel.getNodesByNodeId(n[i])
+            map(lambda x:nodes.extend(nodeModel.getNodesByNodeId(x)), [x.nodeId for x in postList])
 
-            per = users.get_permission_by_douid(user.douban_id)
-            rights = per[0].rights
+            rights = users.get_permission_by_douid(user.douban_id)[0].rights
 
             if users.is_user_exist_in_apply_log(user.douban_id): #如果申请记录表中有此用户记录：
                 apply_log = users.get_log_result(user.douban_id)
@@ -79,7 +71,7 @@ class index:
         else:
             from config import db
             #得到上线时间距今多少天
-            t = time.strptime('2012-12-28 02:15:57', "%Y-%m-%d %X")
+            t = time.strptime('2013-03-15 02:15:57', "%Y-%m-%d %X")
             ts = datetime.datetime(* t[:6])
             delta = (datetime.datetime.now() - ts).days 
 

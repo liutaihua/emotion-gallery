@@ -17,44 +17,28 @@ class home:
         rights = per[0].rights
         if rights > 1 : #管理员权限
             #post
-            rec_posts = admin.get_rec_posts()
-            rec_nodes = admin.get_rec_nodes()
+            rec_posts = list(admin.get_rec_posts())
+            rec_nodes = list(admin.get_rec_nodes())
 
             #post
             postList = []
-            for i in xrange(len(rec_posts)):
-                postList += postModel.getPostsByPostId(rec_posts[i].pid)
-
-            a = []
-            for post in postList:
-                a += str(post.postAuthor).split()
+            map(lambda x:postList.extend(postModel.getPostsByPostId(x.pid)), rec_posts)
 
             post_authors = []
-            for i in xrange(len(a)):
-                post_authors += users.get_users_by_id(a[i])
-
-            p= []
-            for post in postList:
-                p += str(post.nodeId).split()
+            map(lambda x:post_authors.extend(users.get_users_by_id(x)), [k.postAuthor for k in postList])
 
             post_nodes = []
-            for i in xrange(len(p)):
-                post_nodes += nodeModel.getNodesByNodeId(p[i])
+            map(lambda x:post_nodes.extend(nodeModel.getNodesByNodeId(x)), [k.nodeId for k in postList])
 
             #node
             nodeList = []
-            for i in xrange(len(rec_nodes)):
-                nodeList += nodeModel.getNodesByNodeId(rec_nodes[i].nid)
-
-            n = []
-            for node in nodeList:
-                n += str(node.node_author).split()
+            map(lambda x:nodeList.extend(nodeModel.getNodesByNodeId(x.nid)), rec_nodes)
 
             node_authors = []
-            for i in xrange(len(n)):
-                node_authors += users.get_users_by_id(n[i])
+            map(lambda x:node_authors.extend(users.get_users_by_id(x)), [k.node_author for k in nodeList])
             
             # if rec_nodes or rec_posts:
+            print len(post_nodes), len(postList)
             return view.template_admin(view.admin_home(postList, post_authors, post_nodes,  nodeList, node_authors))
         else:
             raise web.notfound()

@@ -3,3 +3,4 @@
 email_templates.py
 config.py
 nohup.out
+static/upload

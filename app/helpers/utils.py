@@ -6,7 +6,31 @@ import web
 import config
 import Image, ImageFilter
 
-import md5, time, types
+import time, types
+import string
+from hashlib import md5
+
+
+def sortkeypicker(keynames):
+    reverse_tuple = set()
+    for i, k in enumerate(keynames):
+        if k[:1] == '-':
+            keynames[i] = k[1:]
+            reverse_tuple.add(k[1:])
+
+    def getit(adict):
+        composite = [adict[k] for k in keynames]
+        for i, (k, v) in enumerate(zip(keynames, composite)):
+            if k in reverse_tuple:
+                composite[i] = -int(v)
+        return composite
+
+    return getit
+
+
+def sort_dict_by_multi_key(d, key_list, reverse=False):
+    return sorted(d, key=sortkeypicker(key_list), reverse=reverse)
+
 
 def dict_remove(d, *keys):
     for k in keys:

@@ -89,12 +89,12 @@ class post_image_upload:
         # pic = data.pic
         cgi.maxlen = 2 * 1024 * 1024 # 限制2MB
         try:
-            x = web.input(uploadImg={})
+            data = web.input(uploadImg={})
             homedir = os.getcwd()
             filedir = '%s/static/upload/post_img' %homedir #图片存放路径
 
-            if 'uploadImg' in x: # to check if the file-object is created
-                filepath = x.uploadImg.filename.replace('\\','/') # replaces the windows-style slashes with linux ones.
+            if 'uploadImg' in data: # to check if the file-object is created
+                filepath = data.uploadImg.filename.replace('\\','/') # replaces the windows-style slashes with linux ones.
                 filename = filepath.split('/')[-1] # splits the and chooses the last part (the filename with extension) #获取文件名
                 ext = filename.split('.', -1)[-1] #获取后缀
                 if ext == 'jpg' or ext == 'gif' or ext == 'jpeg' or ext == 'png' or ext == 'JPG' or ext == 'bmp' or ext == 'BMP' or ext == 'PNG':
@@ -114,7 +114,7 @@ class post_image_upload:
                     filename = t + '_' + authKey + '.' + ext #以时间+authKey作为文件名
                     
                     fout = open(d_path + '/' + filename,'wb') # creates the file where the uploaded file should be stored
-                    fout.write(x.uploadImg.file.read()) # writes the uploaded file to the newly created file.
+                    fout.write(data.uploadImg.file.read()) # writes the uploaded file to the newly created file.
                     fout.close() # closes the file, upload complete.
 
                     im = Image.open(d_path + '/' + filename)
@@ -326,8 +326,7 @@ class vote_cancel(object):
 class post_latest:
     @session.login_required
     def GET(self):
-        per = users.get_permission_by_douid(user.douban_id)
-        rights = per[0].rights
+        rights = users.get_permission_by_douid(user.douban_id)[0].rights
         postList = postModel.getRecent20Posts()
         return view.base(view.post_latest(postList), user, siteName, rights, ntf_list=None, notification_num=None, ntf_posts=None, ntf_users=None)
 

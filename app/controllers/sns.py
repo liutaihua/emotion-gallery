@@ -78,8 +78,9 @@ class OAuth2Login(object):
         qs = urllib.urlencode(qs)
         resp, content = httplib2_request(self.access_token_uri, "POST", body=qs)
         if resp.status != 200:
-            raise OAuthLoginError('get_access_token, status=%s:reason=%s:content=%s' \
-                    %(resp.status, resp.reason, content))
+            return view.error404('Connection failed') #note:need to change view name "error404"
+            #raise OAuthLoginError('get_access_token, status=%s:reason=%s:content=%s' \
+            #        %(resp.status, resp.reason, content))
         return json_decode(content)
 
 class DoubanLogin(OAuth2Login):
@@ -102,8 +103,9 @@ class DoubanLogin(OAuth2Login):
         resp, content = httplib2_request(uri, "GET", 
                 headers = headers)
         if resp.status != 200:
-            raise OAuthLoginError('get_access_token, status=%s:reason=%s:content=%s' \
-                    %(resp.status, resp.reason, content))
+            return view.error404('Connection failed') #note:need to change view name "error404"
+        #    raise OAuthLoginError('get_access_token, status=%s:reason=%s:content=%s' \
+        #            %(resp.status, resp.reason, content))
         r = json_decode(content)
         user_info = DoubanUser(r)
 
@@ -178,7 +180,7 @@ class Douban:
             login_service = None
             if provider == config.OPENID_DOUBAN:
                 openid_type = config.OPENID_TYPE_DICT[config.OPENID_DOUBAN]
-                login_service = DoubanLogin(d['key'], d['secret'], d['redirect_uri'])
+                douban_login = DoubanLogin(d['key'], d['secret'], d['redirect_uri'])
             # elif provider == config.OPENID_SINA:
             #     openid_type = config.OPENID_TYPE_DICT[config.OPENID_SINA]
             #     login_service = SinaLogin(d['key'], d['secret'], d['redirect_uri'])
@@ -196,18 +198,11 @@ class Douban:
             #     else:
             #         return "connect to %s fail" % provider
 
-            try:
-                token_dict = login_service.get_access_token(code)
-            except OAuthLoginError, e:
-                return view.error404('Connection failed') #note:need to change view name "error404"
+            token_dict = douban_login.get_access_token(code)
 
-            if not ( token_dict and token_dict.get("access_token") ):
+            if not token_dict or not token_dict.get("access_token"):
                 return(401, "no_access_token")
-            try:
-                user_info = login_service.get_user_info(
-                    token_dict.get("access_token"), token_dict.get("uid"))
-            except OAuthLoginError, e:
-                return(401, e.msg)
+            user_info = douban_login.get_user_info(token_dict.get("access_token"), token_dict.get("uid"))
 
             if user_info:
                 douban_id = user_info['id']

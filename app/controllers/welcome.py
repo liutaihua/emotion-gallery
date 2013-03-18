@@ -36,32 +36,27 @@ class welcome:
             raise web.notfound()
 
     def POST(self, arg):
-        try:
-            if user.username == arg:
-                email = web.input().regEmail
-                #发送验证邮件
-                token = md5.md5(time.ctime() + email).hexdigest()
-                #判断邮箱激活表中是否有此email或者douban_id
-                if not users.user_exist_in_table_confirm_email(email, user.douban_id):
-                    try:
-                        email_templates.msg_new_user_email(user, email, token)
-                        #保存记录到数据库
-                        users.save_confirm_email(email, user.douban_id, token)
-                        #跳转到邮件发送成功页面
-                        return web.seeother('/welcome/'+ user.username +'/send_email_feedback?status=succesful')
-                    except Exception, e:
-                        print 'error--------'
-                        print e
-                        return web.seeother('/welcome/'+ user.username +'/send_email_feedback?status=failed')
-                else:
-                    #数据库中已经有记录了
-                    return web.seeother('/welcome/'+ user.username +'/send_email_feedback?status=duplicate')
+        if user.username == arg:
+            email = web.input().regEmail
+            #发送验证邮件
+            token = md5.md5(time.ctime() + email).hexdigest()
+            #判断邮箱激活表中是否有此email或者douban_id
+            if not users.user_exist_in_table_confirm_email(email, user.douban_id):
+                try:
+                    email_templates.msg_new_user_email(user, email, token)
+                    #保存记录到数据库
+                    users.save_confirm_email(email, user.douban_id, token)
+                    #跳转到邮件发送成功页面
+                    return web.seeother('/welcome/'+ user.username +'/send_email_feedback?status=succesful')
+                except Exception, e:
+                    print 'error--------, send email feedback ------------------'
+                    print e
+                    return web.seeother('/welcome/'+ user.username +'/send_email_feedback?status=failed')
             else:
-                raise web.notfound()
-        except Exception, e:
-            # raise web.notfound()
-            print e
-            return web.seeother('/welcome/'+ user.username +'/send_email_feedback?status=failed')
+                #数据库中已经有记录了
+                return web.seeother('/welcome/'+ user.username +'/send_email_feedback?status=duplicate')
+        else:
+            raise web.notfound()
 
         # #如果数据库中没有此用户的豆瓣id，则创建
         # if users.is_douban_id_available(user.douban_id):
@@ -141,102 +136,90 @@ class send_email_feedback:
 #验证注册邮箱
 class welcome_confirm_email:
     def GET(self, token):
-        CE = users.get_confirm_email_by_token(token)
-        if CE :
+        user_email_info = users.get_confirm_email_by_token(token)
+        if user_email_info:
             new = time.time() #得到访问当前页面时的时间
-            old = time.mktime(CE.get('creation_ts').timetuple())
+            old = time.mktime(user_email_info.get('creation_ts').timetuple())
             if new - old > 86400: #如果超过24小时
                 #删除记录
                 users.del_verification_data_by_token(token)
                 return view.base02(view.welcome_confirm_email(user, msg="out-time", ), user, siteName)
             else:
-                try:
+                #通过token得到douban_id，保险起见，session中的douban_id可能已失效 ？#note
+                douban_id = user_email_info.douban_id
+                email = user_email_info.email
+
+                username = user.username
+                nickname = user.nickname
+                avatarPath = user.avatarPath
+                city = user.get('city',None)
+
+                desc = user.get('desc', None)
+
+                #把 confirm 设为 1
+                users.update_confirm_email(token)
+
+                #如果这个用户已经在user表中存在，则是旧用户
+                if not users.is_douban_id_available(douban_id):
                     
-                    #通过token得到douban_id，保险起见，session中的douban_id可能已失效 ？#note
-                    douban_id = CE.douban_id
-                    email = CE.email
-
-                    username = user.username
-                    nickname = user.nickname
-                    avatarPath = user.avatarPath
-                    try:
-                        city = user.city
-                    except Exception, e:
-                        city = None
-
-                    try:
-                        desc = user.desc
-                    except:
-                        desc = None
-
-                    #把 confirm 设为 1
-                    users.update_confirm_email(token)
-
-                    #如果这个用户已经在user表中存在，则是旧用户
-                    if not users.is_douban_id_available(douban_id):
-                        
-                        #把邮件地址 等 用户信息 更新到 user 表
-                        users.update_user_by_douid(
-                            douban_id,
-                            email = email,
-                            nickname = nickname,
-                            avatarPath = avatarPath,
-                            nicknameChangeTime = datetime.datetime.now(),
-                            lastLoginIP = web.ctx.ip,
-                            lastLoginTime = datetime.datetime.now()
-                        )
-                        #得到刚刚操作的用户id
-                        # last_user_id = db.query("SELECT LAST_INSERT_ID()")[0].values()[0]
-                        last_user_id = users.get_douban_user_by_doubanid(douban_id).id
-                        #查询资料表用是否有此用户
-                        if users.is_user_profile_exist(last_user_id):
-                            users.update_profile(last_user_id, city = city, bio = desc )
-                        else:
-                            users.insert_profile(last_user_id, city = city, bio = desc )
-
-                        #清空session，为下一次 douban_login 装填做准备，以免占用太多空间 - 可能需要这么做？ #note
-                        # session.clear_douban_callback()
-
-                        #session 设为登录
-                        # session.reset()
-                        session.douban_login(douban_id)
-
+                    #把邮件地址 等 用户信息 更新到 user 表
+                    users.update_user_by_douid(
+                        douban_id,
+                        email = email,
+                        nickname = nickname,
+                        avatarPath = avatarPath,
+                        nicknameChangeTime = datetime.datetime.now(),
+                        lastLoginIP = web.ctx.ip,
+                        lastLoginTime = datetime.datetime.now()
+                    )
+                    #得到刚刚操作的用户id
+                    # last_user_id = db.query("SELECT LAST_INSERT_ID()")[0].values()[0]
+                    last_user_id = users.get_douban_user_by_doubanid(douban_id).id
+                    #查询资料表用是否有此用户
+                    if users.is_user_profile_exist(last_user_id):
+                        users.update_profile(last_user_id, city = city, bio = desc )
                     else:
-                        #创建用户
-                        users.create_douban_account(
-                            douban_id = douban_id,
-                            username = username,
-                            nickname = nickname,
-                            email = email,
-                            avatarPath = avatarPath,
-                            ipAddress = web.ctx.ip,
-                            lastLoginIP = web.ctx.ip,
-                            nicknameChangeTime = datetime.datetime.now(),
-                            lastLoginTime = datetime.datetime.now(),
-                            via = 1
-                        )
-
-                        #得到刚刚插入的用户id
-                        # last_user_id = db.query("SELECT LAST_INSERT_ID()")[0].values()[0]
-                        last_user_id = users.get_douban_user_by_doubanid(douban_id).id
-                        #新建用户资料
                         users.insert_profile(last_user_id, city = city, bio = desc )
 
+                    #清空session，为下一次 douban_login 装填做准备，以免占用太多空间 - 可能需要这么做？ #note
+                    # session.clear_douban_callback()
 
-                        #如果权限表中没有此用户，增加，并把权限设为 0
-                        if not users.is_user_exist_in__permission(douban_id):
-                            db.insert('_permission', douban_id = douban_id, rights = 1)
+                    #session 设为登录
+                    # session.reset()
+                    session.douban_login(douban_id)
 
-                        #清空session，为下一次 douban_login 装填做准备，以免占用太多空间 - 可能需要这么做？ #note
-                        # session.clear_douban_callback()
+                else:
+                    #创建用户
+                    users.create_douban_account(
+                        douban_id = douban_id,
+                        username = username,
+                        nickname = nickname,
+                        email = email,
+                        avatarPath = avatarPath,
+                        ipAddress = web.ctx.ip,
+                        lastLoginIP = web.ctx.ip,
+                        nicknameChangeTime = datetime.datetime.now(),
+                        lastLoginTime = datetime.datetime.now(),
+                        via = 1
+                    )
 
-                        #session 设为登录
-                        session.douban_login(douban_id)
+                    #得到刚刚插入的用户id
+                    # last_user_id = db.query("SELECT LAST_INSERT_ID()")[0].values()[0]
+                    last_user_id = users.get_douban_user_by_doubanid(douban_id).id
+                    #新建用户资料
+                    users.insert_profile(last_user_id, city = city, bio = desc )
 
-                    return view.base02(view.welcome_confirm_email(user, msg="succes"), user, siteName)
-                except Exception, e:
-                    # print e
-                    # raise web.notfound()
-                    return view.test(e)
+
+                    #如果权限表中没有此用户，增加，并把权限设为 0
+                    if not users.is_user_exist_in__permission(douban_id):
+                        db.insert('_permission', douban_id = douban_id, rights = 1)
+
+                    #清空session，为下一次 douban_login 装填做准备，以免占用太多空间 - 可能需要这么做？ #note
+                    # session.clear_douban_callback()
+
+                    #session 设为登录
+                    session.douban_login(douban_id)
+
+                return view.base02(view.welcome_confirm_email(user, msg="succes"), user, siteName)
         else:
             raise web.notfound()
