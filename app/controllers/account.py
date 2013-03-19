@@ -160,7 +160,7 @@ class register:
                 users.insert_profile(id, city = '上海', bio = '')
 
             session.login(f.d.email)
-            user.logged = False # 虽然注册了, 但是还要等邮件确认
+            user.is_logged = False # 虽然注册了, 但是还要等邮件确认
             user.douban_id = id
 
             token = md5.md5(time.ctime() + f.d.email).hexdigest()
