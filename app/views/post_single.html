@@ -152,6 +152,7 @@ $if user.is_logged:
                 <div class="post_meta_info">
                     <a class="post_author" title="$post_author_info.nickname" href="/member/$post_author_info.username">$post_author_info.nickname</a>
                     <time class="post_date">$timestrf(post.creation_ts)</time>
+                    <p></p>
                 </div>
             </div>
         </header>
@@ -188,6 +189,8 @@ $if user.is_logged:
 
         <div id="action_block">
             $if user.is_logged:
+                $if int(user.id) == int(post.postAuthor):
+                    <a href='#'>编辑</a>
                 <div class="btn-group
                 $if is_voted != 0:
                         active
@@ -302,7 +305,6 @@ $if user.is_logged:
                         $if user.is_logged:
                             $if user.id == comments[i].uid:
                                 <a href="javascript:void(0)" rel="nofollow" class="del_comment">删除</a>
-                            
                         </div>
                     </li>
             </ul>

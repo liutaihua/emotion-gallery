@@ -176,13 +176,11 @@ class post_single:
 
             likers = postModel.get_voters_by_pid(post.id)
             likers_list = []
-            for i in xrange(len(likers)):
-                likers_list += users.get_users_by_id(likers[i].uid)
+            map(lambda x:likers_list.extend(users.get_users_by_id(x.uid)), likers)
 
             comments = postModel.get_comments_by_pid(post.id).list()
             commenters = []
-            for i in xrange(len(comments)):
-                commenters += users.get_users_by_id(comments[i].uid)
+            map(lambda x:commenters.extend(users.get_users_by_id(x.uid)), comments)
 
             #是否登录，
             if user.is_logged:
@@ -199,16 +197,15 @@ class post_single:
                 ntf_users = []
                 mtf_posts = []
                 mtf_users = []
-
                 ntf_list = notification_results.list()
                 mtf_list = notification_mention_results.list()
-                for x in xrange(len(ntf_list)):
-                    ntf_posts += postModel.getPostsByPostId(ntf_list[x].pid)
-                    ntf_users += users.get_users_by_id(ntf_list[x].uid)
 
-                for x in xrange(len(mtf_list)):
-                    mtf_posts += postModel.getPostsByPostId(mtf_list[x].pid)
-                    mtf_users += users.get_users_by_id(mtf_list[x].uid)
+                map(lambda x:ntf_posts.extend(postModel.getPostsByPostId(x.pid)), ntf_list)
+                map(lambda x:ntf_users.extend(users.get_users_by_id(x.pid)), ntf_list)
+
+                map(lambda x:mtf_posts.extend(postModel.getPostsByPostId(x.pid)), mtf_list)
+                map(lambda x:mtf_users.extend(users.get_users_by_id(x.uid)), mtf_list)
+
 
                 #获取提醒页面传过来的提醒类型参数
                 ntf_type = web.input(ntf_type='').ntf_type
