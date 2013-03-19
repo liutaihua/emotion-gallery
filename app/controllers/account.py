@@ -90,8 +90,8 @@ def render_account(show='all',
     login_form=login_form(), register_form=register_form(), forgot_password_form=forgot_password_form(), reset_password_form=reset_password_form(), token = '',
     on_success_message='', error_message=''):
     
-    return view.base(
-        view.account(show, login_form, register_form, forgot_password_form, reset_password_form, token, on_success_message, error_message), user, site_name
+    return view.base03(
+        view.account(show, login_form, register_form, forgot_password_form, reset_password_form, token, on_success_message, error_message), user, site_name, rights=0
         )
 
 # class index:
@@ -101,8 +101,8 @@ def render_account(show='all',
 #登录
 class login:
     def GET(self):
-        # return render_account(show='login_only')
-        raise web.seeother('/')
+        return render_account(show='login_only')
+        #raise web.seeother('/')
     
     def POST(self):
         f = self.form()
@@ -111,6 +111,8 @@ class login:
             return render_account(show, login_form=f)
         else:
             session.login(f.d.email)
+            user_info = users.get_user_by_email(f.d.email)
+            user.douban_id = user_info.id  # 普通注册用户直接把douban_id赋值为id， 方便后面一系列的对douban_id的逻辑
             # raise web.seeother('/')
             raise web.seeother(session.get_last_visited_url())
     
@@ -120,9 +122,9 @@ class login:
 #注册    
 class register:
     def GET(self):
-        raise web.seeother('/')
+        #raise web.seeother('/')
         # NOTE: 以后改回来
-        # return render_account(show='register_only')
+        return render_account(show='register_only')
     
     def POST(self):
         f = self.form()
@@ -149,8 +151,29 @@ class register:
             )
         else:
             users.create_account(f.d.username, f.d.email, f.d.password, f.d.nickname)
+            id = users.get_user_by_email(f.d.email).id
+            if not users.is_user_exist_in__permission(id):
+                db.insert('_permission', douban_id = id, rights = 1)
+            if users.is_user_profile_exist(id):
+                users.update_profile(id, city = '上海', bio = '')
+            else:
+                users.insert_profile(id, city = '上海', bio = '')
+
             session.login(f.d.email)
-            raise web.seeother('/')
+            user.douban_id = id
+
+            token = md5.md5(time.ctime() + f.d.email).hexdigest()
+            try:
+                email_templates.msg_new_user_email(user, f.d.email, token)
+                #保存记录到数据库
+                users.save_confirm_email(f.d.email, user.id, token)
+                #跳转到邮件发送成功页面
+                return web.seeother('/welcome/'+ user.username +'/send_email_feedback?status=succesful')
+            except Exception, e:
+                print 'error--------, send email feedback ------------------'
+                print e
+                return web.seeother('/welcome/'+ user.username +'/send_email_feedback?status=failed')
+            #raise web.seeother('/')
     
     def form(self):
         return register_form()

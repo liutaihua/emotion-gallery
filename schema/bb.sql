@@ -30,7 +30,7 @@ CREATE TABLE `UserProfile` (
   `city` varchar(100) DEFAULT NULL,
   `bio` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -82,9 +82,9 @@ CREATE TABLE `_confirm_email` (
   `douban_id` int(200) DEFAULT NULL,
   `token` varchar(200) DEFAULT NULL,
   `creation_ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `confirmed` int(11) DEFAULT NULL,
+  `confirmed` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -132,16 +132,18 @@ DROP TABLE IF EXISTS `_notification`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `_notification` (
-  `id` int(11) DEFAULT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `uid` int(11) DEFAULT NULL,
   `pid` int(11) DEFAULT NULL,
   `mid` int(11) DEFAULT NULL,
   `nid` int(11) DEFAULT NULL,
   `aid` int(11) DEFAULT NULL,
   `vars` varchar(300) DEFAULT NULL,
-  `isread` int(11) DEFAULT NULL,
-  `type` int(11) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `isread` int(11) DEFAULT '0',
+  `type` int(11) DEFAULT NULL,
+  `creation_ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -152,15 +154,17 @@ DROP TABLE IF EXISTS `_notification_mention`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `_notification_mention` (
-  `id` int(11) DEFAULT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `aid` int(11) DEFAULT NULL,
   `uid` int(11) DEFAULT NULL,
   `mid` int(11) DEFAULT NULL,
   `vars` varchar(300) DEFAULT NULL,
   `nid` int(11) DEFAULT NULL,
   `pid` int(11) DEFAULT NULL,
-  `isread` int(11) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `isread` int(11) DEFAULT '0',
+  `creation_ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -205,7 +209,7 @@ CREATE TABLE `_post` (
   `creation_ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `comment_num` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -222,7 +226,7 @@ CREATE TABLE `_post_comments` (
   `content` varchar(500) DEFAULT NULL,
   `creation_ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -284,8 +288,10 @@ CREATE TABLE `users` (
   `lastLoginTime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `nickname` varchar(200) DEFAULT NULL,
   `joinTime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `authKey` varchar(200) DEFAULT NULL,
+  `password` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -297,4 +303,4 @@ CREATE TABLE `users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-03-17 21:00:32
+-- Dump completed on 2013-03-19 18:09:53

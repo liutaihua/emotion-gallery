@@ -161,7 +161,6 @@ class welcome_confirm_email:
 
                 #如果这个用户已经在user表中存在，则是旧用户
                 if not users.is_douban_id_available(douban_id):
-                    
                     #把邮件地址 等 用户信息 更新到 user 表
                     users.update_user_by_douid(
                         douban_id,

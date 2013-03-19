@@ -56,10 +56,10 @@ urls = (
     # '/explore',                                                 'app.controllers.home.explore',
 
 #account
-    # '/account/register',                                        'app.controllers.account.register',
-    # '/account/login',                                           'app.controllers.account.login',
+    '/account/register',                                        'app.controllers.account.register',
+    '/account/login',                                           'app.controllers.account.login',
     '/account/logout',                                          'app.controllers.account.logout',
-    # '/account/forgot',                                          'app.controllers.account.forgot',
+    '/account/forgot',                                          'app.controllers.account.forgot',
     # '/account/reset/([0-9a-zA-Z]{32})',                         'app.controllers.account.reset',
     # '/account/help',                                            'app.controllers.account.help',
     # '/account/check_username',                                  'app.controllers.account.check_username',
@@ -151,6 +151,9 @@ urls = (
 #connect
     '/connect/douban',                                          'app.controllers.sns.connect_douban',
     '/connect/douban/callback',                                 'app.controllers.sns.Douban',
+
+    '/connect/sina',                                            'app.controllers.sns.connect_sina',
+    '/connect/sina/callback',                                 'app.controllers.sns.Sina',
 
 #helper
     '/clearPhoto',                                              'tools.clearPhoto',

@@ -308,6 +308,15 @@ class connect_douban:
         d = config.APIKEY_DICT.get(provider)
         raise web.seeother('https://www.douban.com/service/auth2/auth?client_id='+ d['key'] +'&redirect_uri='+ d['redirect_uri'] +'&response_type=code')
 
+from weibo import APIClient
+class connect_sina:
+    def GET(self):
+        provider = 'sina'
+        d = config.APIKEY_DICT.get(provider)
+        client = APIClient(app_key=d['key'], app_secret=d['secret'], redirect_uri=d['redirect_uri'])
+        url = client.get_authorize_url()
+        raise web.seeother(url)
+
 ## User数据接口
 class AbsUserData(object):
 
