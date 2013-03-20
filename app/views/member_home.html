@@ -5,7 +5,7 @@ $var jsfiles: /static/public/js/jquery.masonry.min.js /static/public/js/jquery.i
 <div id="member_profile_page">
     <div id="profile_header" style="background-image:url(/static/public/img/5.jpg)">
         <div id="profile_header_inner">
-            $if not u.avatarPath:
+            $if u.avatarPath==None:
                 u.avatarPath = 'http://img3.douban.com/icon/user_normal.jpg'
             $if u.avatarPath != 'http://img3.douban.com/icon/user_normal.jpg':
                 $ src = u.avatarPath.replace('/u','/ul')

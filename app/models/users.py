@@ -10,7 +10,7 @@ import socket
 from config import db , encryption_key
 
 #创建帐号
-def create_account(username, email, password, nickname):
+def create_account(username, email, password, nickname, avatarPath):
     #生成10位随机数
     all = list('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSQUVWXYZ')
     randStr = ''
@@ -28,7 +28,7 @@ def create_account(username, email, password, nickname):
     nicknameTime = datetime.datetime.now()
 
     #入库    
-    db.insert('users', username=username, email=email, password=hashlib.md5(password + encryption_key).hexdigest(), nickname=nickname, authKey = authKey, ipAddress = ipAddress, nicknameChangeTime = nicknameTime)#注:password 为混合密钥进行md5加密
+    db.insert('users', username=username, email=email, password=hashlib.md5(password + encryption_key).hexdigest(), nickname=nickname, authKey = authKey, ipAddress = ipAddress, nicknameChangeTime = nicknameTime, avatarPath=avatarPath)#注:password 为混合密钥进行md5加密
 
 
 #查询邮箱验证 via token
@@ -220,9 +220,12 @@ def create_douban_account(**value):
 def update_user_by_douid(douban_id, **value):
     db.update('users', vars=dict(douban_id=douban_id), where='douban_id = $douban_id', **value)
 
+def update_user_by_id(id, **value):
+    db.update('users', vars=dict(id=id), where='id = $id', **value)
+
 #检查豆瓣id在数据库中是否已存在
-def  is_douban_id_available(douban_id):
-    return not db.select(
+def  is_douban_id_exist(douban_id):
+    return db.select(
         'users', 
         vars = dict(douban_id=douban_id),
         what = 'count(id) as c', 

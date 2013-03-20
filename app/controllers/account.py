@@ -14,7 +14,7 @@ from app.models import users
 from app.common import session
 from app.common import email_templates
 
-from config import view, encryption_key, site_name, db
+from config import view, encryption_key, site_name, db, site_domain
 
 user = session.get_session()
 siteName = site_name
@@ -150,8 +150,14 @@ class register:
                 register_form=f
             )
         else:
-            users.create_account(f.d.username, f.d.email, f.d.password, f.d.nickname)
+            avatarPath = site_domain + '/static/public/img/default_48x48.jpg'
+            users.create_account(f.d.username, f.d.email, f.d.password, f.d.nickname, avatarPath)
             id = users.get_user_by_email(f.d.email).id
+            users.update_user_by_id(
+                id,
+                douban_id=id
+            )
+
             if not users.is_user_exist_in__permission(id):
                 db.insert('_permission', douban_id = id, rights = 1)
             if users.is_user_profile_exist(id):
@@ -169,11 +175,11 @@ class register:
                 #保存记录到数据库
                 users.save_confirm_email(f.d.email, user.id, token)
                 #跳转到邮件发送成功页面
-                return web.seeother('/welcome/'+ user.username +'/send_email_feedback?status=succesful')
+                return web.seeother('/welcome/'+ f.d.username +'/send_email_feedback?status=succesful')
             except Exception, e:
                 print 'error--------, send email feedback ------------------'
                 print e
-                return web.seeother('/welcome/'+ user.username +'/send_email_feedback?status=failed')
+                return web.seeother('/welcome/'+ f.d.username +'/send_email_feedback?status=failed')
             #raise web.seeother('/')
     
     def form(self):
