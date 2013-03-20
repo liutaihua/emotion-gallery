@@ -132,7 +132,10 @@ class admin_users():
             douban_id_list = []
             users_list = list(results)
             for userinfo in users_list:
-                douban_id_list.append(userinfo.douban_id)
+                if userinfo.douban_id:
+                    douban_id_list.append(userinfo.douban_id)
+                else:
+                    douban_id_list.append(userinfo.id)
 
             permissions = []
             for id in douban_id_list:
