@@ -135,22 +135,28 @@ class rec_node:
 
         nodeList = []
         
-        for i in xrange(len(rec_nodes)):
-            nodeList += nodeModel.getNodesByNodeId(rec_nodes[i].nid)
+        #for i in xrange(len(rec_nodes)):
+        #    nodeList += nodeModel.getNodesByNodeId(rec_nodes[i].nid)
+        for node in rec_nodes:
+            nodeList.append(nodeModel.getNodesByNodeId(node.nid))
 
-        a = []
-        for node in nodeList:
-            a += str(node.node_author).split()
+        #a = []
+        #for node in nodeList:
+        #    a += str(node.node_author).split()
 
+        #authors = []
+        #for i in xrange(len(a)):
+        #    authors += users.get_users_by_id(a[i])
         authors = []
-        for i in xrange(len(a)):
-            authors += users.get_users_by_id(a[i])
+        for node in nodeList:
+            authors.append(users.get_users_by_id(node.node_author))
 
         #得到最新的那个post
         lastest_posts = []
-        for i in xrange(len(nodeList)):
-            print nodeList[i].id
-            lastest_posts += str(time.mktime(postModel.getRecentOnePostsInNode(nodeList[i].id).creation_ts.timetuple())).split()
+        for node in nodeList:
+            recent_post_in_node = postModel.getRecentOnePostsInNode(node.id)
+            if recent_post_in_node:
+                lastest_posts.append(recent_post_in_node.creation_ts.timetuple())
 
         #得到当前用户的权限
         if user.is_logged:

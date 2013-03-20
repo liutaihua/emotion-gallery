@@ -190,27 +190,27 @@ $if user.is_logged:
         <div id="action_block">
             $if user.is_logged:
                 $if int(user.id) == int(post.postAuthor):
-                <div class="btn-group
-                $if is_voted != 0:
-                        active
-                ">
-                    $if post.magnitude:
-                        <div class="btn btn-primary btn-likers">
-                            
-                            <span class="sentiment like_count">
-                                <i>$post.magnitude</i> 人
+                    <div class="btn-group
+                    $if is_voted != 0:
+                            active
+                    ">
+                        $if post.magnitude:
+                            <div class="btn btn-primary btn-likers">
+                                
+                                <span class="sentiment like_count">
+                                    <i>$post.magnitude</i> 人
+                                </span>
+                            </div>
+                        <div post-data="$post.id" user-data="$user.id" class="btn btn-primary sentiment_with_vote_block">
+                            <span class="vote_block"></span>
+                            <span class="sentiment">
+                            $if is_voted != 0:
+                                取消喜欢
+                            $else:
+                                喜欢
                             </span>
                         </div>
-                    <div post-data="$post.id" user-data="$user.id" class="btn btn-primary sentiment_with_vote_block">
-                        <span class="vote_block"></span>
-                        <span class="sentiment">
-                        $if is_voted != 0:
-                            取消喜欢
-                        $else:
-                            喜欢
-                        </span>
                     </div>
-                </div>
             
             $else:
                 <div class="btn-group
