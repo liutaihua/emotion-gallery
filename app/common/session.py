@@ -31,7 +31,7 @@ def add_sessions_to_app(app):
         session = web.config._session
 
 def get_session():
-    if web.config._session.is_logged:
+    if web.config._session.get('is_logged', False):
         if not web.config._session.douban_id:
             web.config._session.douban_id = web.config._session.id
     return web.config._session
