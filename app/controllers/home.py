@@ -20,10 +20,11 @@ class index:
         if user.is_logged:
             rec_posts = admin.get_rec_posts()
             postList = []
-            if len(rec_posts) > 20:
-                map(lambda x:postList.extend(postModel.getPostsByPostId(x.pid)), rec_posts)
-            else:
-                postList = list(postModel.getRecent20Posts())
+            # if len(rec_posts) > 20:
+            #     map(lambda x:postList.extend(postModel.getPostsByPostId(x.pid)), rec_posts)
+            # else:
+            #     postList = list(postModel.getRecent20Posts())
+            map(lambda x:postList.extend(postModel.getPostsByPostId(x.pid)), rec_posts)
 
             #postList = sort_dict_by_multi_key(postList, ['magnitude', 'creation_ts'], reverse=True)
             postList = sorted(postList, key=lambda x:x.creation_ts, reverse=True)
