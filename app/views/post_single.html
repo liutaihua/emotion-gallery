@@ -190,7 +190,6 @@ $if user.is_logged:
         <div id="action_block">
             $if user.is_logged:
                 $if int(user.id) == int(post.postAuthor):
-                    <a href='#'>编辑</a>
                 <div class="btn-group
                 $if is_voted != 0:
                         active
