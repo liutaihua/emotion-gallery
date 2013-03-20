@@ -55,13 +55,13 @@ class index:
 
             ntf_list = notification_results.list()
             mtf_list = notification_mention_results.list()
-            for x in xrange(len(ntf_list)):
-                ntf_posts += postModel.getPostsByPostId(ntf_list[x].pid)
-                ntf_users += users.get_users_by_id(ntf_list[x].uid)
+            for notify in ntf_list:
+                ntf_posts.extend(postModel.getPostsByPostId(notify.pid))
+                ntf_users.extend(users.get_users_by_id(notify.uid))
 
-            for x in xrange(len(mtf_list)):
-                mtf_posts += postModel.getPostsByPostId(mtf_list[x].pid)
-                mtf_users += users.get_users_by_id(mtf_list[x].uid)
+            for notify in mtf_list:
+                mtf_posts.extend(postModel.getPostsByPostId(notify.pid))
+                mtf_users.extend(users.get_users_by_id(notify.uid))
 
             ntf_list = ntf_list + mtf_list
             ntf_posts = ntf_posts + mtf_posts
@@ -135,28 +135,19 @@ class rec_node:
 
         nodeList = []
         
-        #for i in xrange(len(rec_nodes)):
-        #    nodeList += nodeModel.getNodesByNodeId(rec_nodes[i].nid)
         for node in rec_nodes:
-            nodeList.append(nodeModel.getNodesByNodeId(node.nid))
+            nodeList.extend(nodeModel.getNodesByNodeId(node.nid))
 
-        #a = []
-        #for node in nodeList:
-        #    a += str(node.node_author).split()
-
-        #authors = []
-        #for i in xrange(len(a)):
-        #    authors += users.get_users_by_id(a[i])
         authors = []
         for node in nodeList:
-            authors.append(users.get_users_by_id(node.node_author))
+            authors.extend(users.get_users_by_id(node.node_author))
 
         #得到最新的那个post
         lastest_posts = []
         for node in nodeList:
             recent_post_in_node = postModel.getRecentOnePostsInNode(node.id)
             if recent_post_in_node:
-                lastest_posts.append(recent_post_in_node.creation_ts.timetuple())
+                lastest_posts.extend(recent_post_in_node.creation_ts.timetuple())
 
         #得到当前用户的权限
         if user.is_logged:
@@ -180,13 +171,13 @@ class rec_node:
 
             ntf_list = notification_results.list()
             mtf_list = notification_mention_results.list()
-            for x in xrange(len(ntf_list)):
-                ntf_posts += postModel.getPostsByPostId(ntf_list[x].pid)
-                ntf_users += users.get_users_by_id(ntf_list[x].uid)
+            for notify in ntf_list:
+                ntf_posts.extend(postModel.getPostsByPostId(notify.pid))
+                ntf_users.extend(users.get_users_by_id(notify.uid))
 
-            for x in xrange(len(mtf_list)):
-                mtf_posts += postModel.getPostsByPostId(mtf_list[x].pid)
-                mtf_users += users.get_users_by_id(mtf_list[x].uid)
+            for notify in mtf_list:
+                mtf_posts.extend(postModel.getPostsByPostId(notify.pid))
+                mtf_users.extend(users.get_users_by_id(notify.uid))
 
             ntf_list = ntf_list + mtf_list
             ntf_posts = ntf_posts + mtf_posts
