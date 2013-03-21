@@ -215,7 +215,6 @@ class post_single:
                 ntf_users = ntf_users + mtf_users
                 notification_num = notification_num+mention_num
 
-
             else:
                 rights = 0
                 is_voted = None
