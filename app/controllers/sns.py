@@ -103,7 +103,9 @@ class DoubanLogin(OAuth2Login):
         resp, content = httplib2_request(uri, "GET", 
                 headers = headers)
         if resp.status != 200:
-            return view.error404('Connection failed') #note:need to change view name "error404"
+            print "========error connect author douban ============",resp.status, content
+            return False
+            #return view.error404('Connection failed') #note:need to change view name "error404"
         #    raise OAuthLoginError('get_access_token, status=%s:reason=%s:content=%s' \
         #            %(resp.status, resp.reason, content))
         r = json_decode(content)
