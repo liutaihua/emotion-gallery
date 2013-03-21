@@ -150,7 +150,7 @@ class register:
                 register_form=f
             )
         else:
-            avatarPath = site_domain + '/static/public/img/default_48x48.jpg'
+            avatarPath = '/default'
             users.create_account(f.d.username, f.d.email, f.d.password, f.d.nickname, avatarPath)
             id = users.get_user_by_email(f.d.email).id
             users.update_user_by_id(
