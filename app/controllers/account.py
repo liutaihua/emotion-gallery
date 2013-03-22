@@ -150,8 +150,7 @@ class register:
                 register_form=f
             )
         else:
-            avatarPath = '/default'
-            users.create_account(f.d.username, f.d.email, f.d.password, f.d.nickname, avatarPath)
+            users.create_account(f.d.username, f.d.email, f.d.password, f.d.nickname)
             id = users.get_user_by_email(f.d.email).id
             users.update_user_by_id(
                 id,

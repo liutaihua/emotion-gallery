@@ -61,7 +61,7 @@ $if content.has_key('cssfiles'):
                                 <a title="$user.nickname" class="avatar_c" href="/member/$user.username">
                                 $if user.avatarPath:
                                     $if user.via == 0:
-                                        $ src = '/static/upload/image' + user.avatarPath + '_48.jpg'
+                                        $ src = '/static/upload/avatar/' + user.avatarPath + '_48.jpg'
                                     $if user.via == 1:
                                         $ src = user.avatarPath
                                     <img src="$src" width="30" alt="$user.nickname" />
