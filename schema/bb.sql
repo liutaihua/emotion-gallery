@@ -294,7 +294,7 @@ DROP TABLE IF EXISTS `image`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `image` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `path` varchar(100) DEFAULT NULL,
+  `path` varchar(300) DEFAULT NULL,
   `userID` int(11) DEFAULT NULL,
   `comm_num` smallint(6) DEFAULT NULL,
   `imageTitle` varchar(100) DEFAULT NULL,
@@ -303,7 +303,7 @@ CREATE TABLE `image` (
   `view_num` smallint(6) DEFAULT NULL,
   `creation_ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -366,4 +366,4 @@ CREATE TABLE `users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-03-23 10:31:45
+-- Dump completed on 2013-03-23 18:19:33

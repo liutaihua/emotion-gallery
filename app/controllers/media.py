@@ -28,6 +28,7 @@ class media_upload:
     @session.login_required
     def POST(self):
         data = web.input(path={})
+        print 2222222222222222222, data
         paths = data.get('path').split(',')
         names = data.get('name').split(',')
         userID = user.id
