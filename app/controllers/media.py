@@ -42,9 +42,14 @@ class photo_upload:
 
     @session.login_required
     def POST(self):
-        data = web.input(path={})
-        paths = data.get('path').split(',')
-        names = data.get('name').split(',')
+        data = web.input().get('files[]')
+        #print 2222222222222222222, web.input().get('files[]')
+        paths = ['/static/upload/media/1111.jpg']
+        
+        f = open('static/upload/media/1111.jpg', 'wb')
+        f.write(data)
+        f.close()
+        names = ['1111.jpg']
         userID = user.id
         #creationTime = time.mktime(time.localtime())
         image.AddImage(paths, names, userID) #入库
