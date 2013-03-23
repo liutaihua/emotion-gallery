@@ -100,6 +100,7 @@ urls = (
 #media
     '/media/upload',                                            'app.controllers.media.media_upload',
     '/media/describe',                                          'app.controllers.media.media_describe',
+    '/photo/upload',                                            'app.controllers.media.photo_upload',
     '/photo/([0-9]{8})',                                        'app.controllers.media.photo_single',
     '/photo/([0-9]{1,8})',                                        'app.controllers.media.photo_single',
     '/photo/edit/([0-9]{8})',                                   'app.controllers.media.photo_edit',

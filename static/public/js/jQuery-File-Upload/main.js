@@ -50,7 +50,8 @@ $(function () {
         // Demo settings:
         $('#fileupload').fileupload('option',{
             //url: 'http://localhost:10001/',
-            url: 'http://www.yangbodu.com/',
+            //url: 'http://www.yangbodu.com/',
+            url: 'http://yyu.me/photo/upload',
             maxFileSize: 2000000, //2MB
             maxNumberOfFiles: 5,
             //acceptFileTypes: /(\.|\/)(mp3)$/i,
@@ -76,7 +77,8 @@ $(function () {
         if ($.support.cors) {
             $.ajax({
                 //url: 'http://localhost:10001/',
-                url: 'http://www.yangbodu.com/',
+                //url: 'http://www.yangbodu.com/',
+                url: 'http://yyu.me/photo/upload',
                 type: 'HEAD'
             }).fail(function () {
                 $('<span class="alert alert-error"/>')

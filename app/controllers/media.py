@@ -35,6 +35,22 @@ class media_upload:
         image.AddImage(paths, names, userID) #入库
         return view.base03(view.media_describe(paths, names), user, siteName, 2)
 
+class photo_upload:
+    @session.login_required
+    def GET(self):
+        return view.media_upload(user)
+
+    @session.login_required
+    def POST(self):
+        data = web.input(path={})
+        paths = data.get('path').split(',')
+        names = data.get('name').split(',')
+        userID = user.id
+        #creationTime = time.mktime(time.localtime())
+        image.AddImage(paths, names, userID) #入库
+        return view.base03(view.media_describe(paths, names), user, siteName, 2)
+
+
 class media_describe:
     @session.login_required
     def POST(self):
