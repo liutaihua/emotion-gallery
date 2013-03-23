@@ -53,7 +53,7 @@ urls = (
 
     '/',                                                        'app.controllers.home.index',
     '/node',                                                    'app.controllers.home.rec_node',
-    # '/explore',                                                 'app.controllers.home.explore',
+    '/explore',                                                 'app.controllers.home.explore',
 
 #account
     '/account/register',                                        'app.controllers.account.register',
@@ -101,6 +101,7 @@ urls = (
     '/media/upload',                                            'app.controllers.media.media_upload',
     '/media/describe',                                          'app.controllers.media.media_describe',
     '/photo/([0-9]{8})',                                        'app.controllers.media.photo_single',
+    '/photo/([0-9]{1,8})',                                        'app.controllers.media.photo_single',
     '/photo/edit/([0-9]{8})',                                   'app.controllers.media.photo_edit',
     '/photo/([0-9]{8})/fans',                                   'app.controllers.media.photo_fans',
     '/photo/delete/([0-9]{8})',                                 'app.controllers.media.photo_delete',

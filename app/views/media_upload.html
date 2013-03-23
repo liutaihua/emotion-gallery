@@ -46,7 +46,8 @@ $def with(user)
                 $else:
                     <li class="avatar20"><a target="_blank" title="查看ta的豆瓣页面" href="/member/$user.username">
                             $if user.avatarPath:
-                                $ src = '/static/upload/image' + user.avatarPath + '_48.jpg'
+                                $# src = '/static/upload/image' + user.avatarPath + '_48.jpg'
+                                $ src = user.avatarPath
                                 <img src="$src" width="30" alt="" />
                             $else:
                                 <img src="/static/public/img/default_48x48.jpg" width="30" alt="" />

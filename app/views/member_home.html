@@ -5,12 +5,12 @@ $var jsfiles: /static/public/js/jquery.masonry.min.js /static/public/js/jquery.i
 <div id="member_profile_page">
     <div id="profile_header" style="background-image:url(/static/public/img/5.jpg)">
         <div id="profile_header_inner">
-            $if u.avatarPath==None:
-                u.avatarPath = 'http://img3.douban.com/icon/user_normal.jpg'
-            $if u.avatarPath != 'http://img3.douban.com/icon/user_normal.jpg':
+            $if not u.avatarPath:
+                $ avp = '/static/public/img/default_48x48.jpg'
+            $if avp != '/static/public/img/default_48x48.jpg':
                 $ src = u.avatarPath.replace('/u','/ul')
             $else:
-                $ src = u.avatarPath
+                $ src = avp
             <div id="profile_header_avatar" style="background-image:url($src)">
             </div>
             <h1 style="padding:20px 0;margin:0 auto;">$u.nickname</h1>

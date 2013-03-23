@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.1.66, for redhat-linux-gnu (x86_64)
+-- MySQL dump 10.13  Distrib 5.1.67, for redhat-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: b
 -- ------------------------------------------------------
--- Server version	5.1.66
+-- Server version	5.1.67
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -14,6 +14,48 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `ImageComments`
+--
+
+DROP TABLE IF EXISTS `ImageComments`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ImageComments` (
+  `id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `image_id` int(11) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `ImageFavorite`
+--
+
+DROP TABLE IF EXISTS `ImageFavorite`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ImageFavorite` (
+  `id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `img_id` int(11) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `ImageViewUsers`
+--
+
+DROP TABLE IF EXISTS `ImageViewUsers`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ImageViewUsers` (
+  `id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `image_id` int(11) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `UserProfile`
@@ -30,7 +72,7 @@ CREATE TABLE `UserProfile` (
   `city` varchar(100) DEFAULT NULL,
   `bio` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -84,7 +126,7 @@ CREATE TABLE `_confirm_email` (
   `creation_ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `confirmed` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -121,7 +163,7 @@ CREATE TABLE `_node` (
   `postMount` int(11) DEFAULT '1',
   `creation_ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -143,7 +185,7 @@ CREATE TABLE `_notification` (
   `type` int(11) DEFAULT NULL,
   `creation_ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -199,7 +241,7 @@ CREATE TABLE `_post` (
   `postTitle` varchar(200) DEFAULT NULL,
   `postCaption` varchar(300) DEFAULT NULL,
   `postArticle` varchar(10000) DEFAULT NULL,
-  `postAuthor` varchar(200) DEFAULT NULL,
+  `postAuthor` int(11) DEFAULT NULL,
   `postTemp` int(11) DEFAULT NULL,
   `nodeId` int(11) DEFAULT NULL,
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -209,7 +251,7 @@ CREATE TABLE `_post` (
   `creation_ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `comment_num` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -226,7 +268,7 @@ CREATE TABLE `_post_comments` (
   `content` varchar(500) DEFAULT NULL,
   `creation_ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -241,6 +283,27 @@ CREATE TABLE `_post_vote_user` (
   `uid` int(11) DEFAULT NULL,
   `id` int(11) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `image`
+--
+
+DROP TABLE IF EXISTS `image`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `image` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `path` varchar(100) DEFAULT NULL,
+  `userID` int(11) DEFAULT NULL,
+  `comm_num` smallint(6) DEFAULT NULL,
+  `imageTitle` varchar(100) DEFAULT NULL,
+  `imageDescribe` varchar(100) DEFAULT NULL,
+  `favo_num` smallint(6) DEFAULT NULL,
+  `view_num` smallint(6) DEFAULT NULL,
+  `creation_ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -291,7 +354,7 @@ CREATE TABLE `users` (
   `authKey` varchar(200) DEFAULT NULL,
   `password` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -303,4 +366,4 @@ CREATE TABLE `users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-03-20 13:25:10
+-- Dump completed on 2013-03-23 10:31:45

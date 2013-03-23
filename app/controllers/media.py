@@ -33,7 +33,7 @@ class media_upload:
         userID = user.id
         #creationTime = time.mktime(time.localtime())
         image.AddImage(paths, names, userID) #入库
-        return view.base(view.media_describe(paths, names), user, siteName)
+        return view.base03(view.media_describe(paths, names), user, siteName, 2)
 
 class media_describe:
     @session.login_required
@@ -79,7 +79,7 @@ class photo_single:
                 comments_authors_ids += users.get_users_by_id(comments[i].user_id).list()
             
 
-            return view.base(view.photo_single(img, pager, user_id, user, author, is_favorite, comments, comments_authors_ids), user, siteName)
+            return view.base03(view.photo_single(img, pager, user_id, user, author, is_favorite, comments, comments_authors_ids), user, siteName, 2)
         else:
             raise web.notfound()
 

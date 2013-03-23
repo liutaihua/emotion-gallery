@@ -127,7 +127,7 @@ class explore:
         # for i in xrange(len(img_ids)):
         #     count += str(image.GetFavUserCount(img_ids[i]))
 
-        return view.base(view.explore(last_users, last_image, authors), user, siteName)
+        return view.base03(view.explore(last_users, last_image, authors), user, siteName, 2)
 
 class rec_node:
     def GET(self):
