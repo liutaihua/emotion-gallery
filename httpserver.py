@@ -104,11 +104,12 @@ urls = (
     '/photo/([0-9]{8})',                                        'app.controllers.media.photo_single',
     '/photo/([0-9]{1,8})',                                        'app.controllers.media.photo_single',
     '/photo/edit/([0-9]{8})',                                   'app.controllers.media.photo_edit',
-    '/photo/([0-9]{8})/fans',                                   'app.controllers.media.photo_fans',
+    '/photo/([0-9]{1,8})/fans',                                   'app.controllers.media.photo_fans',
     '/photo/delete/([0-9]{8})',                                 'app.controllers.media.photo_delete',
     '/photo/favorite/([0-9]{8})',                               'app.controllers.media.photo_favorite',
     '/photo/cancel_fav/([0-9]{8})',                             'app.controllers.media.photo_cancel_favorite',
     '/photo/([0-9]{8})/comment',                                'app.controllers.media.photo_add_comment',
+    '/photo/([0-9]{1,8})/comment',                                'app.controllers.media.photo_add_comment',
     '/photo/delete_comment',                                    'app.controllers.media.photo_del_comment',
 
 #node

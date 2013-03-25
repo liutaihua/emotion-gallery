@@ -66,7 +66,8 @@ class media_describe:
         imagePath = f.path.split(',')
         username = user.username
         image.saveTitleDescribe(imagePath, imageTitle, imageDescribe) #入库
-        raise web.seeother('/member/'+ username)
+        #raise web.seeother('/member/'+ username)
+        raise web.seeother('/explore')
 
 class photo_single:
     def GET(self, id):
@@ -152,12 +153,13 @@ class photo_fans:
         for i in xrange(len(fav_user_ids)):
             usernnames += users.get_users_by_id(fav_user_ids[i])
 
-        return view.base(view.photo_fans(img_id, img, usernnames, author), user, siteName)
+        return view.base03(view.photo_fans(img_id, img, usernnames, author), user, siteName, 2)
 
 class photo_add_comment:
     @session.login_required
     def POST(self, img_id):
         data = web.input()
+        print 2222222222222222222, img_id
         i_id = data.img_id
         u_id = data.u_id
         comment = data.comment

@@ -64,6 +64,7 @@ class privacy:
 
 class blog:
     def GET(self):
+        raise web.seeother('http://bb.yyu.me')
         if user.is_logged:
             per = users.get_permission_by_douid(user.douban_id)
             rights = per[0].rights
