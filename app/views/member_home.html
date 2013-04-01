@@ -1,36 +1,52 @@
-$def with (u, profile, postList, nodes)
-$var page_title: $u.nickname
+$def with (u, profile, postList, nodes, user)
+$var page_title: $:u.nickname
 
 $var jsfiles: /static/public/js/jquery.masonry.min.js /static/public/js/jquery.infinitescroll.min.js
 <div id="member_profile_page">
     <div id="profile_header" style="background-image:url(/static/public/img/5.jpg)">
         <div id="profile_header_inner">
-            $if u.avatarPath != 'http://img3.douban.com/icon/user_normal.jpg' and u.avatarPath:
+            $if u.avatarPath != 'http://img3.douban.com/icon/user_normal.jpg':
                 $ src = u.avatarPath.replace('/u','/ul')
-            $elif u.avatarPath:
-                $ src = u.avatarPath
             $else:
-                $ src = '/static/public/img/default_48x48.jpg'
+                $ src = u.avatarPath
             <div id="profile_header_avatar" style="background-image:url($src)">
             </div>
             <h1 style="padding:20px 0;margin:0 auto;">$u.nickname</h1>
-            <div class="city">
-                $if profile.has_key('city'):
-                    $ c = profile.city
-                $else:
-                    $ c = "未知的领域"
-                $c
-            </div>
-            <div class="sns_link share_sns_icon"><a href="http://www.douban.com/people/$u.username" title="查看Ta的豆瓣"><i></i></a></div>
-        </div>
-<!--         <div class="profile_nav_wrap">
-            <div class="profile_nav">
-                <div class="profile_nav_inner">
-                    <a href="/member/$u.username">片段</a> * <a href="/member/$u.username/node">话题</a>
+            <div class="desc">
+                    $if profile.has_key('bio') and profile.bio != None and profile.bio.strip(' ') != '':
+                        $ full = replace_breaks(replace_links(profile.bio.strip(' ')))
+                        <!-- <a href="javascript:void(0)" title="查看简介" id="more_desc"><i class="icon icon-white icon-chevron-down"></i></a> -->
+                    $else:
+                        $ full = ""
+
+                <div id="desc_full">
+                    $:full
                 </div>
             </div>
-        </div> -->
+            <div class="city">
+                <i class="icon icon-white icon-map-marker"></i> 
+                $if profile.has_key('city') and profile.city != None:
+                    $profile.city
+                $else:
+                    <span class="f12">地点未知</span>
+            </div>
+            <div class="sns_link share_sns_icon"><a href="http://www.douban.com/people/$u.username" title="豆瓣主页"><i></i></a></div>
+        </div>
+        $if user.is_logged:
+            $if user.username == u.username:
+                <div id="change_background_img">
+                    <a href="javascript:void(0)" id="change_background_img_btn" class="btn btn-info">更改背景图片</a>
+                    <div id="change_background_img_form">
+                        <div class="node_empty_border">
+                            <div class="node_empty">
+                                <p>拖拽图片到这里</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
     </div>
+
+
     <div class="profile_page_content clearfix">
         <div id="rec_nav">
             <div class="navbar navbar-inverse">
@@ -41,6 +57,14 @@ $var jsfiles: /static/public/js/jquery.masonry.min.js /static/public/js/jquery.i
                     </ul>
                 </div>
             </div>
+            <ul class="nav nav-tabs">
+                <li class="active">
+                    <a href="/member/$u.username#rec_nav">发布的</a>
+                </li>
+                <li>
+                    <a href="/member/$u.username/likes#rec_nav">喜欢的</a>
+                </li>
+            </ul>
         </div>
 
         <div class="profile_items">
@@ -68,7 +92,7 @@ $var jsfiles: /static/public/js/jquery.masonry.min.js /static/public/js/jquery.i
                                     <h1>$postList[i].postTitle</h1>
                                 $if postList[i].postTemp != 3 and postList[i].postTemp != 4 and postList[i].postTemp != 5:
                                     <p class="snippet">
-                                    $postList[i].postArticle.decode('utf8')[0:850].replace(r'<br/>', '')
+                                    $postList[i].postArticle[0:850].replace(r'<br/>', '')
                                     </p>
                                 <div class="gradient"></div>
                             </div>
@@ -78,7 +102,6 @@ $var jsfiles: /static/public/js/jquery.masonry.min.js /static/public/js/jquery.i
                             <span class="post_author"><a target="_blank" title="$u.nickname" href="/member/$u.username">$u.nickname</a> 发布在 <a class="post_belong_node" title="$nodes[i].nodeName" href="/node/$nodes[i].id">$nodes[i].nodeName</a></span>
                         </div>
 
-                        <a href="javascript:void(0)" title="从首页移除" class="del_rec"><i class="icon icon-remove icon-white"></i></a>
                     </div>
                 </li>
             </ul>

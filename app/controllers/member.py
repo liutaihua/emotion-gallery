@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+import re
 import web
 import time
 import datetime
@@ -22,16 +23,12 @@ class member_home:
             offset = (page - 1) * perpage
 
             created_posts = postModel.getCreatedPostsByUserId(u.id, offset, perpage).list()
-
-            print '============='
-            print created_posts
-
             nodes = []
             for i in xrange(len(created_posts)):
                 nodes += nodeModel.getNodesByNodeId(created_posts[i].nodeId)
-
             #得到资料
             profile = users.get_profile_by_user_id(u.id)
+            profile.bio = re.sub('\n', ' ', profile.bio)
             #note 跳转到豆瓣
             # raise web.seeother('http://www.douban.com/people/'+ username)
             
@@ -91,7 +88,7 @@ class member_home:
                 ntf_list = None
                 ntf_posts = None
                 ntf_users = None
-            return view.base(view.member_home(u, profile, created_posts, nodes), user, siteName, rights, ntf_list, notification_num, ntf_posts, ntf_users)
+            return view.base(view.member_home(u, profile, created_posts, nodes, user), user, siteName, rights, ntf_list, notification_num, ntf_posts, ntf_users)
         else:
             raise web.notfound()
 

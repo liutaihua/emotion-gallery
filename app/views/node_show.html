@@ -85,7 +85,7 @@ $if user.is_logged:
                                         <h1>$postList[0].postTitle</h1>
                                     $if postList[0].postTemp != 3 and postList[0].postTemp != 4 and postList[0].postTemp != 5:
                                         <p class="snippet">
-                                        $postList[0].postArticle.decode('utf8')[0:850].replace(r'<br/>', '')
+                                        $postList[0].postArticle[0:850].replace(r'<br/>', '')
                                         </p>
                                     <div class="gradient"></div>
                                 </div>

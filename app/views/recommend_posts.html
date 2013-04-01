@@ -57,7 +57,7 @@ $if rights > 1:
                                         <h1>$postList[0].postTitle</h1>
                                     $if postList[0].postTemp != 3 and postList[0].postTemp != 4 and postList[0].postTemp != 5:
                                         <p class="snippet">
-                                        $postList[0].postArticle.decode('utf8')[0:850].replace(r'<br/>', '')
+                                        $postList[0].postArticle[0:850].replace(r'<br/>', '')
                                         </p>
                                     <div class="gradient"></div>
                                 </div>
@@ -92,7 +92,7 @@ $if rights > 1:
                                         <h1>$postList[i].postTitle</h1>
                                     $if postList[i].postTemp != 3 and postList[i].postTemp != 4 and postList[i].postTemp != 5:
                                         <p class="snippet">
-                                        $postList[i].postArticle.decode('utf8')[0:850].replace(r'<br/>', '')
+                                        $postList[i].postArticle[0:850].replace(r'<br/>', '')
                                         </p>
                                     <div class="gradient"></div>
                                 </div>

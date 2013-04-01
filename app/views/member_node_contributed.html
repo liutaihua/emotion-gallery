@@ -12,23 +12,29 @@ $var jsfiles: /static/public/js/jquery.masonry.min.js /static/public/js/jquery.i
             <div id="profile_header_avatar" style="background-image:url($src)">
             </div>
             <h1 style="padding:20px 0;margin:0 auto;">$u.nickname</h1>
-            <div class="city">
-                $if profile.has_key('city'):
-                    $ c = profile.city
-                $else:
-                    $ c = "未知的领域"
-                $c
-            </div>
-            <div class="sns_link share_sns_icon"><a href="http://www.douban.com/people/$u.username" title="查看Ta的豆瓣"><i></i></a></div>
-        </div>
-<!--         <div class="profile_nav_wrap">
-            <div class="profile_nav">
-                <div class="profile_nav_inner">
-                    <a href="/member/$u.username">片段</a> * <a href="/member/$u.username/node">话题</a>
+            <div class="desc">
+
+                    $if profile.has_key('bio') and profile.bio != None:
+                        $ full = replace_breaks(replace_links(profile.bio.strip()))
+                        <a href="javascript:void(0)" title="查看简介" id="more_desc"><i class="icon icon-white icon-chevron-down"></i></a>
+                    $else:
+                        $ full = ""
+
+                <div id="desc_full">
+                    $:full
                 </div>
             </div>
-        </div> -->
+            <div class="city">
+                <i class="icon icon-white icon-map-marker"></i> 
+                $if profile.has_key('city') and profile.city != None:
+                    $profile.city
+                $else:
+                    未知
+            </div>
+            <div class="sns_link share_sns_icon"><a href="http://www.douban.com/people/$u.username" title="豆瓣主页"><i></i></a></div>
+        </div>
     </div>
+    
     <div class="profile_page_content clearfix">
         <div id="rec_nav">
             <div class="navbar navbar-inverse">
