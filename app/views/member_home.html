@@ -13,12 +13,11 @@ $var jsfiles: /static/public/js/jquery.masonry.min.js /static/public/js/jquery.i
             </div>
             <h1 style="padding:20px 0;margin:0 auto;">$u.nickname</h1>
             <div class="desc">
-                    $if profile.has_key('bio') and profile.bio != None and profile.bio.strip(' ') != '':
-                        $ full = replace_breaks(replace_links(profile.bio.strip(' ')))
-                        <!-- <a href="javascript:void(0)" title="查看简介" id="more_desc"><i class="icon icon-white icon-chevron-down"></i></a> -->
-                    $else:
-                        $ full = ""
-
+                $if profile.has_key('bio') and profile.bio != None and profile.bio.strip(' ') != '':
+                    $ full = replace_breaks(replace_links(profile.bio.strip(' ')))
+                    <!-- <a href="javascript:void(0)" title="查看简介" id="more_desc"><i class="icon icon-white icon-chevron-down"></i></a> -->
+                $else:
+                    $ full = ""
                 <div id="desc_full">
                     $:full
                 </div>
@@ -32,18 +31,6 @@ $var jsfiles: /static/public/js/jquery.masonry.min.js /static/public/js/jquery.i
             </div>
             <div class="sns_link share_sns_icon"><a href="http://www.douban.com/people/$u.username" title="豆瓣主页"><i></i></a></div>
         </div>
-        $if user.is_logged:
-            $if user.username == u.username:
-                <div id="change_background_img">
-                    <a href="javascript:void(0)" id="change_background_img_btn" class="btn btn-info">更改背景图片</a>
-                    <div id="change_background_img_form">
-                        <div class="node_empty_border">
-                            <div class="node_empty">
-                                <p>拖拽图片到这里</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
     </div>
 
 
