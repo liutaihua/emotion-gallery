@@ -345,10 +345,8 @@ class new_post_comment:
         # @提醒
         for username in username_list:
             index = username_list.index(username)
-            #username = username.decode('utf8')
             if not users.is_username_available(username):
                 nicknames += users.get_user_by_username(username).nickname.replace(' ', '&nbsp;').split()
-                nicknames = [x.decode('utf8') for x in nicknames]
                 comment = comment.replace(u'@'+ username, u'@<a href="/member/'+ username + u'">' + nicknames[index] + u'</a>')
                 #得到@的用户id 以|分割组成字符串
                 mid_list += str(users.get_user_by_username(username).id).split()
@@ -360,7 +358,7 @@ class new_post_comment:
         # @提醒
         for mid in mid_list:
             if int(mid) !=  int(aid):
-                notification.new_mention_notification(pid, p.nodeId, aid, uid,mid)
+                notification.new_mention_notification(pid, p.nodeId, aid, uid,mid, type=3)
         
         print '=======notification send====='
 

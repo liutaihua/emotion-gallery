@@ -9,8 +9,8 @@ def new_notification(aid, uid, pid, nid, tp):
     db.insert('_notification', aid=aid, uid=uid, pid=pid, nid=nid, type=tp)
 
 #新增@提醒
-def new_mention_notification(pid, nid, aid, uid, mid):
-    db.insert('_notification_mention', pid=pid, nid=nid, aid=aid, uid=uid, mid=mid)
+def new_mention_notification(pid, nid, aid, uid, mid, type=3):
+    db.insert('_notification_mention', pid=pid, nid=nid, aid=aid, uid=uid, mid=mid, type=type)
 
 #得到提醒数
 def get_unread_notification(uid):
