@@ -37,3 +37,5 @@ def make_all_read(id_list, uid):
         db.update('_notification', vars=dict(id=id, aid=uid), where='id = $id and aid=$aid', isread=1)
         db.update('_notification_mention', vars=dict(id=id, mid=uid), where='id = $id and mid=$mid', isread=1)
 
+def get_uid_by_pid(pid):
+    return db.select('_notification', vars=dict(pid=pid), where='pid=$pid')[0].uid

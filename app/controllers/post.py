@@ -200,8 +200,12 @@ class post_single:
                 ntf_list = notification_results.list()
                 mtf_list = notification_mention_results.list()
 
+                for i in ntf_list:print i.pid
                 map(lambda x:ntf_posts.extend(postModel.getPostsByPostId(x.pid)), ntf_list)
-                map(lambda x:ntf_users.extend(users.get_users_by_id(x.pid)), ntf_list)
+                #map(lambda x:ntf_users.extend(users.get_users_by_id(x.pid)), ntf_list)
+                for x in ntf_list:
+                    uid = notification.get_uid_by_pid(x.pid)
+                    ntf_users.append(users.get_user_by_id(uid))
 
                 map(lambda x:mtf_posts.extend(postModel.getPostsByPostId(x.pid)), mtf_list)
                 map(lambda x:mtf_users.extend(users.get_users_by_id(x.uid)), mtf_list)

@@ -90,6 +90,7 @@ class member_home:
                 ntf_list = None
                 ntf_posts = None
                 ntf_users = None
+            print 222222222222222, u
             return view.base(view.member_home(u, profile, created_posts, nodes, user), user, siteName, rights, ntf_list, notification_num, ntf_posts, ntf_users)
         else:
             raise web.notfound()

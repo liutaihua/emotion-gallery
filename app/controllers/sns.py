@@ -173,7 +173,6 @@ def to_basestring(value):
 class Douban:
     def GET(self):
         data = web.input()
-        
         if data.has_key('code'):
             code = data.code
             provider = 'douban'
@@ -183,25 +182,7 @@ class Douban:
             if provider == config.OPENID_DOUBAN:
                 openid_type = config.OPENID_TYPE_DICT[config.OPENID_DOUBAN]
                 douban_login = DoubanLogin(d['key'], d['secret'], d['redirect_uri'])
-            # elif provider == config.OPENID_SINA:
-            #     openid_type = config.OPENID_TYPE_DICT[config.OPENID_SINA]
-            #     login_service = SinaLogin(d['key'], d['secret'], d['redirect_uri'])
-            # else:
-            #     ## 处理以oauth1的方式授权的
-            #     if provider == config.OPENID_QQ:
-            #         user = _qqweibo_callback(request)
-
-            #     elif provider == config.OPENID_TWITTER:
-            #         user = _twitter_callback(request)
-
-            #     if user:
-            #         _add_sync_task_and_push_queue(provider, user)
-            #         return redirect(url_for('index'))
-            #     else:
-            #         return "connect to %s fail" % provider
-
             token_dict = douban_login.get_access_token(code)
-
             if not token_dict or not token_dict.get("access_token"):
                 return(401, "no_access_token")
             user_info = douban_login.get_user_info(token_dict.get("access_token"), token_dict.get("uid"))
@@ -228,23 +209,16 @@ class Douban:
                                 lastLoginIP = web.ctx.ip,
                                 lastLoginTime = datetime.datetime.now()
                             )
-                            # last_user_id = db.query("SELECT LAST_INSERT_ID()")[0].values()[0]
-
                             last_user_id = users.get_douban_user_by_doubanid(douban_id).id
-                            
                             city = user_info.get('loc_name')
-
                             desc = user_info.get('desc')
-
                             users.update_profile(last_user_id, city = city, bio = desc )
-
                             session.douban_login(douban_id)
                             raise web.seeother(session.get_last_visited_url())
                         elif c == 0:
                             session.douban_callback(user_info)
                             #返回 提醒用户需要激活邮件 的页面
                             raise web.seeother('/welcome/'+ user_info['uid'] +'/send_email_feedback?status=succesful')
-
                     #如果没填写email
                     else:
                         session.douban_callback(user_info)
@@ -252,52 +226,11 @@ class Douban:
                         users.del_verification_data_by_douban_id(douban_id)
                         #跳转到邮箱设置页面
                         raise web.seeother('/welcome/'+ user_info['uid'])
-
                 #如果是新用户
                 else:
                     session.douban_callback(user_info)
                     #跳转到邮箱设置页面
                     raise web.seeother('/welcome/'+ user_info['uid'])
-
-                # #判断用户表中是否已有此douban_id：如果已经存在此用户
-                # if users.get_douban_user_by_doubanid(douban_id):
-                #     print '1111111111111111'
-                #     douban_user = users.get_douban_user_by_doubanid(douban_id)
-
-                #     #如果已经填写了邮箱地址
-                #     if douban_user.email:
-                #         print '222222222222'
-                #         email = douban_user.email
-                #         #查询邮箱验证记录
-                #         e = users.get_confirm_email_by_email(email).get('confirmed')
-
-                #         #已验证邮箱，登录
-                #         if e == 1:
-                #             print '33333333333333'
-                #             session.douban_login(douban_id)
-                #             raise web.seeother(session.get_last_visited_url())
-
-                #         #未验证邮箱,跳转到邮箱验证页面
-                #         elif e == 0:
-                #             print '4444444444444444'
-                #             #先把user_info信息放到 session 中，供跳转后取出使用
-                #             session.douban_callback(user_info)
-                #             raise web.seeother('/welcome/'+ user_info['uid'] +'confirm_email')
-
-                #     #如果未填写邮箱地址
-                #     else:
-                #         print '55555555555555'
-                #         #先把user_info信息放到 session 中，供跳转后取出使用
-                #         session.douban_callback(user_info)
-                #         #跳转到邮箱设置页面
-                #         raise web.seeother('/welcome/'+ user_info['uid'])
-
-                # #如果用户表中没有此用户
-                # else:
-                #     #先把user_info信息放到 session 中，供跳转后取出使用
-                #     session.douban_callback(user_info)
-                #     #跳转到邮箱设置页面
-                #     raise web.seeother('/welcome/'+ user_info['uid'])
             else:
                 return view.error404('Connection failed')
         else:
