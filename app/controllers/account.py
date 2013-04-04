@@ -150,7 +150,7 @@ class register:
                 register_form=f
             )
         else:
-            users.create_account(f.d.username, f.d.email, f.d.password, f.d.nickname)
+            users.create_account(f.d.username, f.d.email, f.d.password, f.d.nickname, '/static/public/img/default_48x48.jpg')
             id = users.get_user_by_email(f.d.email).id
             users.update_user_by_id(
                 id,

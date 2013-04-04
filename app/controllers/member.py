@@ -28,7 +28,9 @@ class member_home:
                 nodes += nodeModel.getNodesByNodeId(created_posts[i].nodeId)
             #得到资料
             profile = users.get_profile_by_user_id(u.id)
-            profile.bio = re.sub('\n', ' ', profile.bio)
+            print 2222222222222222, u
+            if profile.bio:
+                profile.bio = re.sub('\n', ' ', profile.bio)
             #note 跳转到豆瓣
             # raise web.seeother('http://www.douban.com/people/'+ username)
             

@@ -27,7 +27,7 @@ class index:
             map(lambda x:postList.extend(postModel.getPostsByPostId(x.pid)), rec_posts)
 
             #postList = sort_dict_by_multi_key(postList, ['magnitude', 'creation_ts'], reverse=True)
-            postList = sorted(postList, key=lambda x:x.creation_ts, reverse=True)
+            #postList = sorted(postList, key=lambda x:x.creation_ts, reverse=True)
                 
 
             authors = []
