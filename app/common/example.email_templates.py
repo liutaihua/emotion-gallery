@@ -16,7 +16,7 @@ web.config.smtp_password = ''
 web.config.smtp_starttls = True
 
 # _from = config.mail_sender
-_from = 'Biu'
+_from = 'YU'
 # _from = None
 
 bcc = '' #暗抄送 # 
@@ -67,7 +67,7 @@ http://%s/account/confirm/$token
 msg_change_email = \
 '''$def with (email, token)
 
-你在 Biu 更改了邮箱，为了验证新邮箱的真实性，我们给你发了这封邮件，请点击下面的链接来确认这是你的邮箱。
+你在 YU 更改了邮箱，为了验证新邮箱的真实性，我们给你发了这封邮件，请点击下面的链接来确认这是你的邮箱。
 
 http://yyu.me/welcome/confirm_email/$token
 
@@ -77,7 +77,7 @@ http://yyu.me/welcome/confirm_email/$token
 
 如果你有任何疑问，可以回复这封邮件向我们提问。
 
-- Biu
+- YU
 
 '''
 
@@ -119,8 +119,8 @@ body{font-size:12px;font-family: 'Helvetica Neue',Arial,'Liberation Sans',FreeSa
 
 <p>Ta的豆瓣地址为： http://www.douban.com/people/$apply_user.username</p>
 <p>申请时间 $apply_time</p>
-<p>你可以登录Biu管理后台访问 http://yyu.me/admin/apply_for_permission 来处理。</p>
-—— Biu
+<p>你可以登录YU管理后台访问 http://yyu.me/admin/apply_for_permission 来处理。</p>
+—— YU
 </body>
 </html>
 '''
@@ -141,7 +141,7 @@ apply_failed = \
                   <tbody>
                     <tr height="145">
                       <td align="right" style="vertical-align:middle;padding-right:98px">
-                        <a target="_blank" href="http://yyu.me" style="display:inline-block;font-weight:normal;text-decoration:none;font-size:14px;color:#eee;width:50px;font-size:13px">去Biu</a>
+                        <a target="_blank" href="http://yyu.me" style="display:inline-block;font-weight:normal;text-decoration:none;font-size:14px;color:#eee;width:50px;font-size:13px">去YU</a>
                       </td>
                     </tr>
                     <tr height="100">
@@ -155,7 +155,7 @@ apply_failed = \
                     </tr>
                     <tr height="216" align="center">
                       <td>
-                          <div style="padding-bottom:30px;line-height:27px"><a target="_blank" href="http://yyu.me/" style="font-weight:normal;text-decoration:none;color:#eee;font-size:22px">访问Biu</a></div>
+                          <div style="padding-bottom:30px;line-height:27px"><a target="_blank" href="http://yyu.me/" style="font-weight:normal;text-decoration:none;color:#eee;font-size:22px">访问YU</a></div>
                         <div style="line-height:15px"><span style="color:#eee;font-size:13px;line-height:15px;font-weight:normal">阅读<span style="padding:0 3px">•</span>观看<span style="padding:0 3px">•</span>思考<span style="padding:0 3px">•</span>交流</span></div>
                       </td>
                     </tr>
@@ -173,7 +173,7 @@ apply_failed = \
               <tbody>
                   <tr>
                       <td align="center">
-                          <div style="text-align:center;padding:15px 0 100px 0;margin:0 auto;width:500px;color:#999;font-size:12px;line-height:20px">Biu &copy; 2013</div>
+                          <div style="text-align:center;padding:15px 0 100px 0;margin:0 auto;width:500px;color:#999;font-size:12px;line-height:20px">YU &copy; 2013</div>
                       </td>
                   </tr>
               </tbody>
@@ -199,7 +199,7 @@ apply_success = \
                   <tbody>
                     <tr height="145">
                       <td align="right" style="vertical-align:middle;padding-right:98px">
-                        <a target="_blank" href="http://yyu.me" style="display:inline-block;font-weight:normal;text-decoration:none;font-size:14px;color:#eee;width:50px;font-size:13px">去Biu</a>
+                        <a target="_blank" href="http://yyu.me" style="display:inline-block;font-weight:normal;text-decoration:none;font-size:14px;color:#eee;width:50px;font-size:13px">去YU</a>
                       </td>
                     </tr>
                     <tr height="100">
@@ -207,13 +207,13 @@ apply_success = \
                         <div>
                           $apply_user.nickname :<br/>
                           太棒了！您提交的申请已经通过！<br/>
-                          <p style="font-size:22px;margin:0;padding:0;">您现在可以访问Biu来创建话题、发表片段了。</p>
+                          <p style="font-size:22px;margin:0;padding:0;">您现在可以访问YU来创建话题、发表片段了。</p>
                         </div>
                       </td>
                     </tr>
                     <tr height="216" align="center">
                       <td>
-                          <div style="padding-bottom:30px;line-height:27px"><a target="_blank" href="http://yyu.me/" style="font-weight:normal;text-decoration:none;color:#eee;font-size:22px">访问Biu</a></div>
+                          <div style="padding-bottom:30px;line-height:27px"><a target="_blank" href="http://yyu.me/" style="font-weight:normal;text-decoration:none;color:#eee;font-size:22px">访问YU</a></div>
                         <div style="line-height:15px"><span style="color:#eee;font-size:13px;line-height:15px;font-weight:normal">阅读<span style="padding:0 3px">•</span>观看<span style="padding:0 3px">•</span>思考<span style="padding:0 3px">•</span>交流</span></div>
                       </td>
                     </tr>
@@ -231,7 +231,7 @@ apply_success = \
               <tbody>
                   <tr>
                       <td align="center">
-                          <div style="text-align:center;padding:15px 0 100px 0;margin:0 auto;width:500px;color:#999;font-size:12px;line-height:20px">Biu &copy; 2013</div>
+                          <div style="text-align:center;padding:15px 0 100px 0;margin:0 auto;width:500px;color:#999;font-size:12px;line-height:20px">YU &copy; 2013</div>
                       </td>
                   </tr>
               </tbody>
@@ -264,7 +264,7 @@ new_user_email = \
                       <td colspan="3" style="padding:0 92px;vertical-align:middle;color:whiteSmoke;font:12px/1.78 'Helvetica Neue',Helvetica,Arial,Sans-serif;">
                         <div>
                           <span style="font-size:22px;line-height:40px;font-weight:bold">$user.nickname :</span><br/><br/>
-                          很高兴你能注册 Biu ! 为了验证邮箱的真实性，防止有人恶意注册，以及方便你收到别人对你的回复，我们给你发了这封邮件，请点击下面的链接来确认这是你的邮箱。<br/>
+                          很高兴你能注册 YU ! 为了验证邮箱的真实性，防止有人恶意注册，以及方便你收到别人对你的回复，我们给你发了这封邮件，请点击下面的链接来确认这是你的邮箱。<br/>
                           <p style="font-size:12px;margin:10px 0 0 0;font-weight:normal;padding:0;color:#fff">
                             http://yyu.me/welcome/confirm_email/$token</p>
                           <p style="line-height:1.78">
@@ -277,7 +277,7 @@ new_user_email = \
                     </tr>
                     <tr height="216" align="center">
                       <td>
-                          <div style="padding-bottom:30px;font-size:26px;color:#ccc;line-height:27px">Biu</div>
+                          <div style="padding-bottom:30px;font-size:26px;color:#ccc;line-height:27px">YU</div>
                         <div style="line-height:15px"><span style="color:#ccc;font-size:13px;line-height:15px;font-weight:normal">阅读<span style="padding:0 3px">•</span>观看<span style="padding:0 3px">•</span>思考<span style="padding:0 3px">•</span>交流</span></div>
                       </td>
                     </tr>
@@ -295,7 +295,7 @@ new_user_email = \
               <tbody>
                   <tr>
                       <td align="center">
-                          <div style="text-align:center;padding:15px 0 100px 0;margin:0 auto;width:500px;color:#999;font-size:12px;line-height:20px">Biu &copy; 2013</div>
+                          <div style="text-align:center;padding:15px 0 100px 0;margin:0 auto;width:500px;color:#999;font-size:12px;line-height:20px">YU &copy; 2013</div>
                       </td>
                   </tr>
               </tbody>
@@ -323,8 +323,8 @@ body{font-size:12px;font-family: 'Helvetica Neue',Arial,'Liberation Sans',FreeSa
 <p>Ta的豆瓣地址为： http://www.douban.com/people/$user.username</p>
 <p>反馈内容：</p> 
 <blockquote>$content</blockquote>
-<p>你可以登录Biu管理后台访问 http://yyu.me/admin/feedback 来处理。</p>
-—— Biu
+<p>你可以登录YU管理后台访问 http://yyu.me/admin/feedback 来处理。</p>
+—— YU
 </body>
 </html>
 '''
@@ -351,7 +351,7 @@ Hi，$author.nickname :
 
 喜欢了你的片段 <a href="http://yyu.me/post/$post.id?ntf_type=2#action_block">$title</a>
 
-—— Biu
+—— YU
 </body>
 </html>
 '''
@@ -378,7 +378,7 @@ Hi，$author.nickname :
 
 评论了你的片段 <a href="http://yyu.me/post/$post.id?ntf_type=1#postCommentForm">$title</a>
 
-—— Biu
+—— YU
 </body>
 </html>
 '''
@@ -405,7 +405,7 @@ Hi，$nodeAuthor.nickname :
 
 在你创建的话题 <a href="http://yyu.me/node/$node.id">$node.nodeName</a> 中发布了新片段 <a href="http://yyu.me/post/$post.id">$title</a>
 
-—— Biu
+—— YU
 </body>
 </html>
 '''
@@ -422,7 +422,7 @@ def create_account(email, token):
     web.sendmail(_from, email, subject, msg, bcc=bcc)
 
 def change_email(email, token):
-    subject = 'Please verify your e-mail address - Biu'
+    subject = 'Please verify your e-mail address - YU'
     msg = web.template.Template(msg_change_email)(email, token)
     web.sendmail(_from, email, subject, msg, bcc=bcc)
 
@@ -434,7 +434,7 @@ def change_pwd(email, user, ua, ip, tm):
 
 #用户权限申请 给管理员们发送提醒邮件
 def apply_for_permission(apply_user, apply_time, email):
-    subject =  'There is a new apply from Biu'
+    subject =  'There is a new apply from YU'
     msg = web.template.Template(apply_for_permission_temp)(apply_user, apply_time)
     msg['subject'] = Header(subject, 'utf-8') 
     admin_list = ['sober.zhou@gmail.com', 'ihanjiyun@gmail.com']
@@ -442,21 +442,21 @@ def apply_for_permission(apply_user, apply_time, email):
 
 #发送管理员处理后的申请结果邮件 - 通过
 def email_to_user_for_apply_success(apply_user, apply_email):
-    subject = 'Yeah! your application has successfully passed! - Biu'
+    subject = 'Yeah! your application has successfully passed! - YU'
     msg = web.template.Template(apply_success)(apply_user)
     msg['subject'] = Header(subject, 'utf-8') 
     web.sendmail(_from, apply_email, subject, msg, headers=({'Content-Type':'text/html;charset=utf-8','User-Agent': 'webpy.sendmail', 'X-Mailer': 'webpy.sendmail',}), bcc=ihanjiyun)
 
 #发送管理员处理后的申请结果邮件 - 未通过u
 def email_to_user_for_apply_fail(apply_user, apply_email):
-    subject = "I'm sorry your application wasn't accepted - Biu"
+    subject = "I'm sorry your application wasn't accepted - YU"
     msg = web.template.Template(apply_failed)(apply_user)
     msg['subject'] = Header(subject, 'utf-8') 
     web.sendmail(_from, apply_email, subject, msg, headers=({'Content-Type':'text/html;charset=utf-8','User-Agent': 'webpy.sendmail', 'X-Mailer': 'webpy.sendmail',}), bcc=ihanjiyun)
 
 #新用户登记邮箱 发送激活邮件
 def msg_new_user_email(user, email, token):
-    subject = "Welcome to Biu!"
+    subject = "Welcome to YU!"
     msg = web.template.Template(new_user_email)(user, token)
     msg['subject'] = Header(subject, 'utf-8') 
     web.sendmail(_from, email, subject, msg, headers=({'Content-Type':'text/html;charset=utf-8','X-Mailer': 'ZuckMail [version 1.00]'}), bcc=ihanjiyun)
@@ -470,21 +470,21 @@ def send_feedback(user, content):
 
 #用户提醒邮件 - 喜欢
 def someone_like_ur_post(user, author, post):
-    subject = "Some people like the article you published - Biu"
+    subject = "Some people like the article you published - YU"
     msg = web.template.Template(someone_like_ur_post_notification)(user, author, post)
     msg['subject'] = Header(subject, 'utf-8') 
     web.sendmail(_from, author.email, subject, msg, headers=({'Content-Type':'text/html;charset=utf-8','User-Agent': 'webpy.sendmail', 'X-Mailer': 'webpy.sendmail',}))
 
 #用户提醒邮件 - 评论
 def someone_comment_ur_post(user, author, post):
-    subject = "Some people have commented on your articles - Biu"
+    subject = "Some people have commented on your articles - YU"
     msg = web.template.Template(someone_comment_ur_post_notification)(user, author, post)
     msg['subject'] = Header(subject, 'utf-8') 
     web.sendmail(_from, author.email, subject, msg, headers=({'Content-Type':'text/html;charset=utf-8','User-Agent': 'webpy.sendmail', 'X-Mailer': 'webpy.sendmail',}))
 
 #在话题中增加了新片段 提醒
 def someone_creat_new_post(user, nodeAuthor, node, thisPost):
-    subject = "Someone posted a new article in the topic you create - Biu"
+    subject = "Someone posted a new article in the topic you create - YU"
     msg = web.template.Template(someone_creat_new_post_notification)(user, nodeAuthor, node, thisPost)
     msg['subject'] = Header(subject, 'utf-8') 
     web.sendmail(_from, nodeAuthor.email, subject, msg, headers=({'Content-Type':'text/html;charset=utf-8','User-Agent': 'webpy.sendmail', 'X-Mailer': 'webpy.sendmail',}))
