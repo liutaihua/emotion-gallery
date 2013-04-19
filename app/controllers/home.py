@@ -9,6 +9,7 @@ from config import view, site_name
 from app.common import session , email_templates
 #from app.common.utils import sort_dict_by_multi_key
 from app.models import users, image, admin, postModel, nodeModel, notification
+from app.common.misc import filter_tags
 
 siteName = site_name
 user = session.get_session()
@@ -17,7 +18,8 @@ class index:
     def GET(self):
         # foo = web.cookies(cookieName=defaultValue)
         # foo.age
-        if user.is_logged:
+        #if user.is_logged:
+        if True:
             rec_posts = admin.get_rec_posts()
             postList = []
             # if len(rec_posts) > 20:
@@ -36,39 +38,47 @@ class index:
             nodes = []
             map(lambda x:nodes.extend(nodeModel.getNodesByNodeId(x)), [x.nodeId for x in postList])
 
-            rights = users.get_permission_by_douid(user.douban_id)[0].rights
+            if user.is_logged:
+                rights = users.get_permission_by_douid(user.douban_id)[0].rights
 
-            if users.is_user_exist_in_apply_log(user.douban_id): #如果申请记录表中有此用户记录：
-                apply_log = users.get_log_result(user.douban_id)
+                if users.is_user_exist_in_apply_log(user.douban_id): #如果申请记录表中有此用户记录：
+                    apply_log = users.get_log_result(user.douban_id)
+                else:
+                    apply_log = {}
+
+                #得到提醒
+                notification_results, notification_num = notification.get_unread_notification(user.id)
+                #得到@提醒
+                notification_mention_results, mention_num= notification.get_unread_metion_notifition(user.id)
+                #链表 得到提醒的详细id\名称等
+                ntf_posts = []
+                ntf_users = []
+                mtf_posts = []
+                mtf_users = []
+
+                ntf_list = notification_results.list()
+                mtf_list = notification_mention_results.list()
+                for notify in ntf_list:
+                    ntf_posts.extend(postModel.getPostsByPostId(notify.pid))
+                    ntf_users.extend(users.get_users_by_id(notify.uid))
+
+                for notify in mtf_list:
+                    mtf_posts.extend(postModel.getPostsByPostId(notify.pid))
+                    mtf_users.extend(users.get_users_by_id(notify.uid))
+
+                ntf_list = ntf_list + mtf_list
+                ntf_posts = ntf_posts + mtf_posts
+                ntf_users = ntf_users + mtf_users
+                notification_num = notification_num+mention_num
             else:
-                apply_log = {}
+                rights = None
+                apply_log = None
+                ntf_list = None
+                notification_num = None
+                ntf_posts = None
+                ntf_users = None
 
-            #得到提醒
-            notification_results, notification_num = notification.get_unread_notification(user.id)
-            #得到@提醒
-            notification_mention_results, mention_num= notification.get_unread_metion_notifition(user.id)
-            #链表 得到提醒的详细id\名称等
-            ntf_posts = []
-            ntf_users = []
-            mtf_posts = []
-            mtf_users = []
-
-            ntf_list = notification_results.list()
-            mtf_list = notification_mention_results.list()
-            for notify in ntf_list:
-                ntf_posts.extend(postModel.getPostsByPostId(notify.pid))
-                ntf_users.extend(users.get_users_by_id(notify.uid))
-
-            for notify in mtf_list:
-                mtf_posts.extend(postModel.getPostsByPostId(notify.pid))
-                mtf_users.extend(users.get_users_by_id(notify.uid))
-
-            ntf_list = ntf_list + mtf_list
-            ntf_posts = ntf_posts + mtf_posts
-            ntf_users = ntf_users + mtf_users
-            notification_num = notification_num+mention_num
-
-            return view.base(view.recommend_posts(postList, authors, nodes, user, rights, apply_log), user, siteName, rights, ntf_list, notification_num, ntf_posts, ntf_users)
+            return view.base(view.recommend_posts(postList, authors, nodes, user, rights, apply_log, filter_tags), user, siteName, rights, ntf_list, notification_num, ntf_posts, ntf_users)
 
         else:
             from config import db
