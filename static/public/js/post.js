@@ -1,13 +1,4 @@
 jQuery(function () {
-    // jQuery(h1).hallo({
-    //     plugins: {
-    //       'halloformat': {},
-    //       'halloblock': {},
-    //       'hallojustify': {},
-    //       'hallolists': {},
-    //       'halloreundo': {}
-    //     }
-    // });
 
     //得到屏幕的高度
     var win_h = jQuery(window).height();
@@ -25,19 +16,19 @@ jQuery('.switch_tab').live('click',function(){
 //-------------切换模板-------------
 //---------------------------------
     jQuery('.post_template_switch_tab .nav-tabs li > a').click(function(){
-        var l = jQuery(this).attr('data-toggle'),
-            l = l.substr(l.length-1,1);
+        var l = jQuery(this).attr('data-toggle');
+            l = l.substr(l.length-1,1); //得到当前的模板值
 
         //给body增加相应的模板class
         jQuery('body').attr('class', '')
         jQuery('body').addClass('new_post_template_' + l)
 
         //tab当前项
-        jQuery('.post_template_switch_tab .nav-tabs li').removeClass('active')
-        jQuery(this).parents('li').eq(0).addClass('active')
+        jQuery('.post_template_switch_tab .nav-tabs li').removeClass('active');
+        jQuery(this).parents('li').eq(0).addClass('active');
 
         //移除之前增加的模板css文件
-        jQuery("head").children("link:last").remove()
+        jQuery("head").children("link:last").remove();
 
         //添加相应的新模板css文件 //模板css中的图片容器是原始的大小值/初始值
         jQuery("head").append("<link>");
@@ -59,8 +50,7 @@ jQuery('.switch_tab').live('click',function(){
 
         // 判断 图片为拖拽上传并且有图(图片未被删除)
         if (jQuery('.imageHolder').size() > 0 && jQuery(".imageHolder").css("background-image") != 'none'){
-            var path = jQuery(".imageHolder").css("background-image");
-                path = path.replace(/"/g,"").replace(/url\(|\)$/ig, "");
+            var path = jQuery(".imageHolder").css("background-image").replace(/"/g,"").replace(/url\(|\)$/ig, "");
                 // http://0.0.0.0:8080/static/upload/post_img/2012/11/9/201211953523_4275cdf0357c5063d5580fa9b8204412_1200.jpg
                 h = path.split("/", 3).join("/");
                 // http://0.0.0.0:8080
@@ -126,27 +116,33 @@ jQuery('.switch_tab').live('click',function(){
                         'background-image': 'url(' + p_1201_max +')'
                     })
                     jQuery('#post_Img_1').val(p_1201_max)
+                //判断如果是模板5
                 } else if (c == 'new_post_template_5'){
-                    jQuery('.post_image_upload_wrap').css({
-                        'height': win_h
-                    })
                     jQuery('.imageHolder').css({
                         'background-size':'cover',
                         'background-image': 'url(' + p_450_max +')'
-                    })
-                    jQuery('#post_Img_1').val(p_450_max)
-
+                    });
+                    jQuery('#post_Img_1').val(p_450_max);
                     jQuery('.post_image_upload_wrap').css({
                         'height': win_h,
                         'width': 640,
                         'min-width' : 640
-                    })
+                    });
                     jQuery('.new_post_template_5 .post_name, .new_post_template_5 .post_caption, .new_post_template_5 .post_article, .new_post_template_5 .btn_controls').css({
-                        'margin-left' : 690 
+                        'margin-left' : 690//,
+                        // 'margin-right' : 250
                     })
+
                     jQuery('.input-xxlarge').addClass('input-mlarge').removeClass('input-xxlarge');
+                    //重设表单项的的宽度
+                    // jQuery('.new_post_template_5 .post_name input, .new_post_template_5 .post_caption textarea, .new_post_template_5 .redactor_box, .new_post_template_5 .redactor_editor').css({
+                    //     'width' : 100%
+                    // })
+                    // jQuery('#post_field_update_form .redactor_box, .new_post_template_5 .redactor_editor').css({
+                        // 'width' : 400
+                    // })
                 }
-            },150)  
+            },150)
 
         //判断为点击上传：
         } else if (jQuery(".post_image_upload").css("background-image") != 'none'){
@@ -211,38 +207,16 @@ jQuery('.switch_tab').live('click',function(){
                     })
                     jQuery('#post_Img_1').val(p_450_max);
 
-                    // if (img450.width  < win_w*0.35 ){
-                    //     jQuery('.post_image_upload_wrap').css({
-                    //         'height': win_h,
-                    //         // 'width': img450.width,
-                    //         'min-width' : '35%'
-                    //     })
-                    //     jQuery('.new_post_template_5 .post_name, .new_post_template_5 .post_caption, .new_post_template_5 .post_article, .new_post_template_5 .btn_controls').css({
-                    //         'margin-left' : '40%'
-                    //     })
+                    jQuery('.post_image_upload_wrap').css({
+                        'height': win_h,
+                        'width': 640,
+                        'min-width' : 640
+                    })
+                    jQuery('.new_post_template_5 .post_name, .new_post_template_5 .post_caption, .new_post_template_5 .post_article, .new_post_template_5 .btn_controls').css({
+                        'margin-left' : 690 
+                    })
+                    jQuery('.input-xxlarge').addClass('input-mlarge').removeClass('input-xxlarge');
 
-                    // } else if(win_w*0.35 < img450.width &&  img450.width < 640 ){
-                    //     jQuery('.post_image_upload_wrap').css({
-                    //         'height': win_h,
-                    //         'width': img450.width,
-                    //         'min-width' : img450.width
-                    //     })
-                    //     jQuery('.new_post_template_5 .post_name, .new_post_template_5 .post_caption, .new_post_template_5 .post_article, .new_post_template_5 .btn_controls').css({
-                    //         'margin-left' : img450.width + 40 
-                    //     })
-                    //     jQuery('.input-xxlarge').addClass('input-mlarge').removeClass('input-xxlarge');
-
-                    // } else if(img450.width == 640 ){
-                        jQuery('.post_image_upload_wrap').css({
-                            'height': win_h,
-                            'width': 640,
-                            'min-width' : 640
-                        })
-                        jQuery('.new_post_template_5 .post_name, .new_post_template_5 .post_caption, .new_post_template_5 .post_article, .new_post_template_5 .btn_controls').css({
-                            'margin-left' : 690 
-                        })
-                        jQuery('.input-xxlarge').addClass('input-mlarge').removeClass('input-xxlarge');
-                    // }
                 }
 
             },150)
@@ -259,8 +233,11 @@ jQuery('.switch_tab').live('click',function(){
             jQuery('#post_Img_1').val('');
         }
         
+
+        //#switchImgWrap 用于模板2中 切换“上传图片”用，在其他模板中、或者在模板2中已经上传了图片时，此按钮是隐藏状态。
         //切换时的验证控制：html中已经增加了摘要验证============
         //模板1中忽略摘要验证，增加标题、正文、图片验证
+
         if (c == 'new_post_template_1'){
             jQuery('#switchImgWrap').hide();
             jQuery('.post_image_upload_wrap').show();
@@ -269,27 +246,20 @@ jQuery('.switch_tab').live('click',function(){
             jQuery('.input-mlarge').addClass('input-xxlarge').removeClass('input-mlarge');
             jQuery('.new_post_template_1 .post_name, .new_post_template_1 .post_caption, .new_post_template_1 .post_article, .new_post_template_1 .btn_controls').attr('style','')
 
+            // 修改表单验证
             jQuery('.post_caption textarea').attr('ignore','ignore');
             jQuery('.post_name input, .post_article textarea, #post_Img_1').removeAttr('ignore');
             jQuery('.post_caption textarea').attr('errormsg', '啊哈？超过240字了？').attr('datatype', 'post_Caption').attr('placeholder', '摘要 选填');
             jQuery('.post_article textarea').attr('placeholder', '正文 必填');
-            // jQuery("#post_form_1 textarea, #post_form_1 input").removeClass('Validform_error')
-            // jQuery("#post_form_1 .Validform_checktip").removeClass('Validform_wrong').html('')
-            // jQuery("#post_form_1").Validform().check()
             jQuery("#post_form_1 .Validform_checktip").html('');
         }
         //模板2中忽略图片、 摘要验证，增加正文、标题验证
         if (c == 'new_post_template_2'){
-            // jQuery('#switchImgWrap').css('display','inline-block');
-            // jQuery('.post_image_upload_wrap').hide();
             //判断一下是不是已经上传了图片，然后把模板2中已上传的图片显示出来（默认是隐藏的）
-            // alert(jQuery(".imageHolder").css("background-image"))
             if ((jQuery('.imageHolder').size() > 0 && jQuery(".imageHolder").css("background-image") != 'none') || jQuery(".post_image_upload").css("background-image") != 'none' ){
-                // alert(1)
                 jQuery('.post_image_upload_wrap').show();
                 jQuery('#switchImgWrap').hide();
             } else{
-                // alert(0)
                 jQuery('.post_image_upload_wrap').hide();
                 jQuery('#switchImgWrap').css('display','inline-block').html('上传图片');
             }
@@ -315,6 +285,7 @@ jQuery('.switch_tab').live('click',function(){
             jQuery('.new_post_template_3 .post_name, .new_post_template_3 .post_caption, .new_post_template_3 .post_article, .new_post_template_3 .btn_controls').attr('style','')
 
             jQuery('.post_image_upload_wrap').show();
+            jQuery('.post_article textarea').html(''); //去掉富文本编辑器自带的"正文"
             jQuery('.post_article textarea, .post_caption textarea').attr('ignore','ignore');
             jQuery('.post_name input, #post_Img_1').removeAttr('ignore');
             jQuery('.post_caption textarea').attr('errormsg', '啊哈？超过240字了？').attr('datatype', 'post_Caption').attr('placeholder', '摘要 选填');
@@ -332,24 +303,27 @@ jQuery('.switch_tab').live('click',function(){
             jQuery('.new_post_template_4 .post_name, .new_post_template_4 .post_caption, .new_post_template_4 .post_article, .new_post_template_4 .btn_controls').attr('style','')
 
             jQuery('.post_image_upload_wrap').show();
+            jQuery('.post_article textarea').html(''); //去掉富文本编辑器自带的"正文"
             jQuery('.post_article textarea, .post_name input').attr('ignore','ignore');
             jQuery('.post_caption textarea, #post_Img_1').removeAttr('ignore');
-            jQuery('.post_caption textarea').attr('errormsg', '啊哈？超过35字了？').attr('datatype', 'post_Caption_4').attr('placeholder', '摘要');
+            jQuery('.post_caption textarea').attr('errormsg', '啊哈？超过35字了？').attr('datatype', 'post_Caption_4').attr('placeholder', '摘要 必填');
             // jQuery("#post_form_1").Validform().check()
             jQuery("#post_form_1 .Validform_checktip").html('');
         }
 
-        //模板4中忽略正文验证/标题验证, 增加摘要、图片验证
+        //模板5中忽略正文验证/标题验证, 增加摘要、图片验证
         if (c == 'new_post_template_5'){
             jQuery('#switchImgWrap').hide();
             jQuery('.post_name input').removeAttr('ignore');
-            jQuery('.post_article textarea, .post_caption textarea, ').attr('ignore', 'ignore')
+            jQuery('.post_article textarea, .post_caption textarea').attr('ignore', 'ignore')
             jQuery('.post_article textarea').attr('placeholder', '正文 选填')
             jQuery('.post_caption textarea').attr('placeholder', '摘要 选填')
             jQuery('#post_Img_1').removeAttr('ignore');
+
+            jQuery('.input-xxlarge').addClass('input-mlarge').removeClass('input-xxlarge');
         }
 
-        //移除上次所有的表单验证
+        //移除上次所有的表单验证提示信息
         jQuery('.Validform_checktip, #post_form_1 input, #post_form_1 textarea').removeClass('Validform_error').removeClass('Validform_wrong').removeClass('Validform_right')
         jQuery('.Validform_checktip').html('')
 
@@ -658,53 +632,22 @@ jQuery('#switchImgWrap').toggle(
                         jQuery('#post_Img_1').val(''+ response.pic_450);
 
                         if (jQuery('body').attr('publish') == 'true'){
-                            // img450 = new Image()
-                            // img450.src = response.pic_450
-                            // win_w = jQuery(window).width();
 
-                            // setTimeout(function(){
-                                
-                                // if (img450.width  < win_w*0.35 ){
-                                //     jQuery('.post_image_upload_wrap').css({
-                                //         'height': win_h,
-                                //         // 'width': img450.width,
-                                //         'min-width' : '35%'
-                                //     })
-                                //     jQuery('.new_post_template_5 .post_name, .new_post_template_5 .post_caption, .new_post_template_5 .post_article, .new_post_template_5 .btn_controls').css({
-                                //         'margin-left' : '40%'
-                                //     })
-
-                                // } else if(win_w*0.35 < img450.width &&  img450.width < 640 ){
-                                //     jQuery('.post_image_upload_wrap').css({
-                                //         'height': win_h,
-                                //         'width': img450.width,
-                                //         'min-width' : img450.width
-                                //     })
-                                //     jQuery('.new_post_template_5 .post_name, .new_post_template_5 .post_caption, .new_post_template_5 .post_article, .new_post_template_5 .btn_controls').css({
-                                //         'margin-left' : img450.width + 40 
-                                //     })
-                                //     jQuery('.input-xxlarge').addClass('input-mlarge').removeClass('input-xxlarge');
-
-                                // } else if(img450.width == 640 ){
-                                    jQuery('.post_image_upload_wrap').css({
-                                        'height': win_h,
-                                        'width': 640,
-                                        'min-width' : 640
-                                    })
-                                    jQuery('.new_post_template_5 .post_name, .new_post_template_5 .post_caption, .new_post_template_5 .post_article, .new_post_template_5 .btn_controls').css({
-                                        'margin-left' : 690 
-                                    })
-                                    jQuery('.input-xxlarge').addClass('input-mlarge').removeClass('input-xxlarge');
-                                // }
-                            // },120)
+                            jQuery('.post_image_upload_wrap').css({
+                                'height': win_h,
+                                'width': 640,
+                                'min-width' : 640
+                            })
+                            jQuery('.new_post_template_5 .post_name, .new_post_template_5 .post_caption, .new_post_template_5 .post_article, .new_post_template_5 .btn_controls').css({
+                                'margin-left' : 690 
+                            })
+                            jQuery('.input-xxlarge').addClass('input-mlarge').removeClass('input-xxlarge');
                         }
 
                         jQuery(".post_image_upload").css({
                             "background" : 'url("'+ response.pic_450 +' ") center center no-repeat',
                             'background-size' : 'cover'
                         })
-
-                        
                     }
                     jQuery('.message, .upload_btn').hide();
                     jQuery('.del_post_img, .save_post_img_btn').show()
@@ -779,13 +722,18 @@ jQuery('#switchImgWrap').toggle(
             }
         });
 
-        jQuery('#post_Img_1').val('')
+        jQuery('#post_Img_1').val('');
     }
 
 //删除更改图片是上传的图片
-    jQuery(".del_post_img").click(DeletePostImg)
+    jQuery(".del_post_img").click(DeletePostImg);
 
-//验证表单 - 发布新片段 模板1
+//验证表单 - 发布新片段
+// jQuery('#publish_btn').click(function(){
+//     var article = jQuery('.post_article .editable').html();
+//     jQuery('.post_article textarea').val(article)
+
+// })
     jQuery("#post_form_1").Validform({
         ajaxPost:true,
         postonce:true,
@@ -797,7 +745,8 @@ jQuery('#switchImgWrap').toggle(
             "post_Article": /^(?!.{65535}|^\s*$)/g
         },
         tiptype:function(msg,o,cssctl){
-            var objtip=o.obj.siblings(".Validform_checktip");
+            // var objtip=o.obj.siblings(".Validform_checktip");
+            var objtip=o.obj.parents('.control-group').eq(0).find(".Validform_checktip");
             cssctl(objtip,o.type);
             // alert(o.type)
             objtip.text(msg);
@@ -858,7 +807,7 @@ jQuery('#switchImgWrap').toggle(
         
         jQuery('.post_title, #post_title_update_form').toggle();
         if(jQuery(this).hasClass('cancel_title_btn')){
-            jQuery('.post_title span').html(post_Name)
+            jQuery('.post_title span').html(toTxt(post_Name))
             jQuery('#post_Name').val(post_Name)
         }
         
@@ -870,28 +819,104 @@ jQuery('#switchImgWrap').toggle(
     })
 
 //切换片段摘要、正文编辑状态
+    var doc_height = jQuery(document).height(); //先得到原始页面的高度
+
     jQuery('.post_field_edit, .cancel_field_btn').click(function(){
-        var j = jQuery('#post_field_update_form').height(),
+        var z = jQuery('body').attr('class'),
+            t = jQuery(this),
+            j = jQuery('#post_field_update_form').height(),
             c = jQuery('.post_field p:first').html(),
             // a = jQuery('.post_field p:eq(1)').html(),
-            a = jQuery('#post_Article').val(),
-            a = a.replace(/(<br\/>)/g, "\r\n");
-            // b = jQuery('body').attr('class');
+            a = jQuery('#post_Article').val().replace(/(<br\/>)/g, "\r\n");
+
+        var _btnlLeft = t.offset().left, //得到原先的“编辑”按钮距离左边屏幕的距离
+            _btnlTop  = t.offset().top,
+            w = jQuery('#form_action_wrap');
 
         jQuery('#post_field_update_form').toggle(0, function(){
-            jQuery('#post_Caption').val(c)
-            jQuery('#post_Article').val(a)
+            // jQuery('#post_Caption').val(toTxt(c));
+            // jQuery('#post_Article').val(a);
         })
 
-        // jQuery('.btn-group, .share_sns').toggle()
+        jQuery('.btn-group, .share_sns').toggle()
 
-        // if (b == 'new_post_template_4' || b == 'new_post_template_3'){
-        //     $('#comment_block_wrap, #liker_block_wrap').hide()
-        // }
+        if (z == 'new_post_template_4' || z == 'new_post_template_3'){
+            $('#comment_block_wrap, #liker_block_wrap').hide()
+        }
         
         jQuery('.post_field').toggle();
-        
-        jQuery(document).stop().scrollTo('.post_content', 400);
+
+        // 判断当前的模板和是否已经fixed
+        if(t.css('position') == 'fixed'){
+
+            jQuery('#test_log').html('3');
+
+            if(z == 'new_post_template_1'){ // 如果是模板1
+
+                jQuery('#test_log').html('3.1');
+
+                w.css({
+                    'position' : 'fixed',
+                    'left' : _btnlLeft + 15,
+                    'top' : 10
+                });
+            } else if(z == 'new_post_template_5'){ // 如果是模板 5
+
+                jQuery('#test_log').html('3.5');
+
+                w.addClass('form_action_wrap_fixed').css({
+                    'left' : _btnlLeft - 10,
+                    'top' : 10,
+                });
+            } else {
+                jQuery('#test_log').html('3.2');
+
+                w.addClass('form_action_wrap_fixed').css({
+                    'left' : _btnlLeft + 10,
+                    'top' : 10
+                });
+            }
+        } else {
+
+            jQuery('#test_log').html('4');
+
+            if(z == 'new_post_template_1'){ // 如果是模板 1
+
+                jQuery('#test_log').html('4.1');
+
+                w.css({
+                    'position' : 'absolute',
+                    'left' : 720,
+                    'top' : 10,
+                    'width' : 150
+                });
+
+            } else if(z == 'new_post_template_5'){ // 如果是模板 5
+                jQuery('#test_log').html('4.5');
+                w.css({
+                    'position' : 'absolute',
+                    'left' : 540,
+                    'top' : 30,
+                    'width' : 'auto'
+                });
+            } else {
+                jQuery('#test_log').html('4.2');
+                w.css({
+                    'position' : 'absolute',
+                    'left' : 720,
+                    'top' : 10,
+                    'width' : 150
+                });
+            }
+
+        }
+
+        // 因为摘要部分会占用一定的高度，所以需要重新得到页面的高度
+        var doc_height_new = jQuery(document).height(); 
+        alert(doc_height_new - doc_height)
+
+        // 滚动页面到 #post_content 区域
+        // jQuery(document).stop().scrollTo('.post_content', 400);
     })
 
 //验证表单 - 更新片段标题
@@ -906,7 +931,7 @@ jQuery('#switchImgWrap').toggle(
             "post_Name": /^[\w\W]{1,30}$/,
             "post_Caption": /^[\w\W]{1,240}$/,
             "post_Caption_4": /^[\w\W]{1,35}$/,
-            "post_Article": /^[\w\W]{50,60000}$/
+            "post_Article": /^[\w\W]{50,65535}$/
         },
         tiptype:function(msg,o,cssctl){
             var objtip=o.obj.siblings(".Validform_checktip");
@@ -917,11 +942,14 @@ jQuery('#switchImgWrap').toggle(
             curform.find('button').html('发布中...').removeClass('btn-info');
         },
         callback:function(data){
-            var s = jQuery('#post_Name').val()
+            var s = jQuery('#post_Name').val();
             if(data.status=="y"){
-                jQuery('h1.post_title span').html(s)
-                jQuery('h1.post_title').show()
-                jQuery('#post_title_update_form').hide()
+                jQuery('#post_title_update_form span.Validform_checktip').attr('class','Validform_checktip').html('');
+                jQuery('#post_title_update_form button.post_btn').html('保存').addClass('btn-info');
+
+                jQuery('h1.post_title span').html(toTxt(s));
+                jQuery('h1.post_title').show();
+                jQuery('#post_title_update_form').hide();
             }
         }
     })
@@ -936,12 +964,12 @@ jQuery('#switchImgWrap').toggle(
             "post_Article": /^[\w\W]{50,60000}$/,
         },
         tiptype:function(msg,o,cssctl){
-            var objtip=o.obj.siblings(".Validform_checktip");
+            var objtip=o.obj.parents('.control-group').eq(0).find(".Validform_checktip");
             cssctl(objtip,o.type);
             objtip.text(msg);
         },
         beforeSubmit:function(curform){
-            curform.find('button').html('发布中...').removeClass('btn-info');
+            curform.find('button').html('发布中').removeClass('btn-info');
         },
         callback:function(data){
             var c = jQuery('#post_Caption').val(),
@@ -1016,19 +1044,9 @@ jQuery('#switchImgWrap').toggle(
                     url:'/post/vote',
                     type:'POST',
                     data:{ post_id : post_id,},
-                    dataType : "json",
-                    // success:function(mes){
-                    //     if (mes.status == 'y'){
-                            
-                    //     }
-                    // },
-                    error:function(){
-                        alert('sorry，出错了。请联系管理员。')
-                    }
+                    dataType : "json"
                 });
             }
-
-            
         }
     })
 
@@ -1060,192 +1078,18 @@ jQuery('#switchImgWrap').toggle(
             'visibility':'visible'
         })
     },function(){
-            var t = jQuery(this).find('.share_sns_list')
-            t.hide(150)
+        var t = jQuery(this).find('.share_sns_list')
+        t.hide(150)
     })
 
+//redactor
+    jQuery('.post_article textarea').redactor({
+        air : true,
+        lang: 'zh_cn',
+        airButtons: [ 'formatting', '|', 'bold', 'italic', '|', 'unorderedlist', 'orderedlist', '|', 'image', 'video', 'link' ],
+        formattingTags: ['pre', 'blockquote', 'p', 'h2', 'h1']
+    });
 
-
-
-    //mentions reply @回复
-    // var names = new Array;
-    // var usernames = new Array;
-    // var avatars = new Array;
-    // //得到所有评论的用户昵称 和 用户名 头像
-    // jQuery('#comment_list .post_author_image_w').each(function(i) {
-    //     names[i] = jQuery(this).attr('title');
-    //     usernames[i] = jQuery(this).attr('href').split('/')[2];
-    //     avatars[i] = jQuery(this).find('img').attr('src');
-    // })
-
-    // var replyUsers;
-
-    // function getReplyUsers() {
-    //     replyUsers = [];
-    //     var pushed = {};
-    //     pushed["post-rocker"] = 1;
-    //     jQuery('.pic a').each(function(i, item) {
-    //             var img = item.childNodes[1];
-    //             var uid = item.href.slice(item.href.lastIndexOf('/') + 1);
-
-    //             if (!(uid in pushed)) {
-    //                 replyUsers.push({
-    //                     name: img.alt,
-    //                     username: uid,
-    //                     avatar: img.src
-    //                 });
-    //                 pushed[uid] = 1;
-    //             }
-    //         }
-    //     );
-    // }
-    // getReplyUsers();
-    // // alert(replyUsers)
-
-    // function filteredUser(keyword, limit, excludes) {
-    //     if (!replyUsers) getReplyUsers();
-    //     var limit = limit || 5;
-    //     var users = [];
-    //     var excludes = excludes || {};
-    //     for (var i = 0, len = replyUsers.length; i < len && users.length < limit; i++) {
-    //         var item = replyUsers[i];
-    //         if (item.uid in excludes) continue;
-    //         if (!keyword) {
-    //             users.push(item);
-    //             continue;
-    //         }
-    //         if (item.username.indexOf(keyword) !== -1) {
-    //             users.push(item);
-    //             continue;
-    //         }
-    //         if (item.uid.indexOf(keyword) !== -1) {
-    //             users.push(item);
-    //         }
-    //     }
-    //     // alert(JSON.stringify(users));
-        
-    //     // return {
-    //     //     users: users
-    //     // }
-
-    //     return users
-    // }
-
-    // var users = replyUsers;
-    // alert(users)
-    // alert(JSON.stringify(users));
-    // jQuery('#comment_block').append('<h1>豆瓣的</h1><p>' + JSON.stringify(users) + '</p>');
-
-
-
-
-    // //数组去重函数
-    // var planabc_uniq = function (arr) {  
-    //     var a = [],  
-    //         o = {},  
-    //         i,  
-    //         v,  
-    //         cv, // corrected value  
-    //         len = arr.length;  
-      
-    //     if (len < 2) {  
-    //         return arr;  
-    //     }  
-      
-    //     for (i = 0; i < len; i++) {  
-    //         v = arr[i];  
-      
-    //         /* closurecache 提供的函数中使用的是  cv = v + 0;， 
-    //          * 这样就无法辨别类似[1, 10, "1", "10"]的数组， 
-    //          * 因为运算后 => 1, 10, 10, 100，很明显，出现了重复的标示符。 
-    //          * 加前面就难道没问题吗？ 
-    //          * 有的：数组中不能出现类似01 、001，以 0 开头的数字， 
-    //          * 但适用性比原先更广。 
-    //          */  
-    //         cv = 0 + v;  
-      
-    //         if (!o[cv]) {  
-    //             a.push(v);  
-    //             o[cv] = true;  
-    //         }  
-    //     }  
-    //     return a;  
-    // }  
-
-    // names = planabc_uniq(names)
-    // usernames = planabc_uniq(usernames)
-    // avatars = planabc_uniq(avatars)
-
-
-    // var mynickname = jQuery('#navbarWrapper .avatar_c').attr('title'), //自己的昵称
-    //     myusername = jQuery('#navbarWrapper .avatar_c').attr('href').split('/')[2], //自己的用户名
-    //     myavatar = jQuery('#navbarWrapper .avatar_c img').attr('src'); //自己的头像
-    // names.splice(jQuery.inArray(mynickname,names),1); //从昵称列表中去掉自己的昵称
-    // usernames.splice(jQuery.inArray(myusername,usernames),1); //从昵称列表中去掉自己的用户名
-    // avatars.splice(jQuery.inArray(myavatar,avatars),1); //从昵称列表中去掉自己的头像
-
-
-    // // $.each(names, function(i){
-    // //     alert(i + '=' + names[i] + ':'+ usernames[i])
-    // // })
-
-    // var names = jQuery.map(names, function(value,i) {
-    //     return {'name':names[i],'username':usernames[i], 'avatar': avatars[i]};
-    // });
-    // // alert(names)
-    // jQuery('#comment_block').append('<h1>自己的</h1><p>' + JSON.stringify(names) + '</p>');
-
-    // //@插件
-    // jQuery('#commentContent').atwho('@', {
-    //     data : users,
-    //     limit: 10,
-    //     tpl: "<li data-value='${name}'><img src='${avatar}' alt='' />@ ${name} <small>${username}</small></li>"
-    // });
-
-    // //@插件
-    // jQuery('#commentContent').atwho('@', {
-    //     data : names,
-    //     limit: 10,
-    //     tpl: "<li data-value='${name}'><img src='${avatar}' alt='' />@ ${name} <small>${username}</small></li>"
-    // });
-
-    // // replace screenName in val, return uid
-    // function cleanVal(val, users) {
-    //   var reg_regchar = /(\\|\+|\:|\*|\/|\||\$|\?|\^|\[|\]|\(|\)\.)/g;
-    //   var end_val = val || '';
-    //   var tagged = '@芝 居 @Marshall';
-    //   // var tagged = t.tagged;
-    //   // alert('tagged:' + tagged)
-    //   var name;
-    //   var names = [];
-    //   // for (name in tagged) {
-    //   //   names.push(name.replace(reg_regchar, '\\$1'));
-    //   // }
-
-    //   if (!names.length) return end_val;
-
-    //   names.sort(function(a, b) { return a.length < b.length });
-    //   names = names.join('|');
-
-    //   alert('names:' + names)
-
-    //   end_val = end_val.replace(new RegExp('@(' + names + ')', 'g'), function(p0, p1) {
-    //     // return '@' + tagged[p1];
-    //     return '@' + 'test';
-    //   });
-
-    //   alert( 'end_val :' + end_val)
-
-    //   // return false
-    //   return end_val;
-    // }
-
-    // //提交评论是过滤用户名
-    // jQuery('#postCommentForm').submit(function(e) {
-    //     jQuery('#commentContent').val(cleanVal(jQuery('#commentContent').val(), users));
-    //     // alert(jQuery('#commentContent').val())
-    //     return false;
-    // });
 
 //未登录时保存跳转连接到cookie
     jQuery('#login_to_add_comment').click(function(){
@@ -1253,6 +1097,7 @@ jQuery('#switchImgWrap').toggle(
         $.cookie('redirect_url', url, { expires: 7, path: '/'});
         window.location.href = '/';
     })
+
 });
 
 

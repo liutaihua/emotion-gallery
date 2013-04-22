@@ -1,6 +1,7 @@
 jQuery(function(){
-    //滚动隐藏导航
+    //页面滚动
     jQuery(window).scroll(function() {
+        //导航和回顶部的显隐
         var t = jQuery(window).scrollTop();
         if(t >= 50){
             // alert(1)
@@ -36,7 +37,7 @@ jQuery(function(){
             jQuery('#goTop').addClass('invisible')
         }
     })
-    
+
     // 回顶端 
     jQuery('#goTop').click(function(){
         jQuery(document).stop().scrollTo(0, 400);
@@ -61,7 +62,7 @@ jQuery(function(){
     })
 
     //打开feedback层
-    jQuery('#feedbackBtn').tooltip({
+    jQuery('#feedbackBtn').TWITTER_tooltip({
         placement : 'right'
     }).click(openFeedback)
 
@@ -92,6 +93,9 @@ jQuery(function(){
             var objtip=o.obj.siblings(".Validform_checktip");
             cssctl(objtip,o.type);
             objtip.text(msg);
+        },
+        beforeSubmit:function(curform){
+            jQuery('#feedback_wrap .btn').val('发布中...').removeClass('btn-primary');
         },
         callback:function(data){
             if(data.status=="y"){
@@ -210,8 +214,79 @@ jQuery(function(){
             }
         });
     })
+
+    //toggle profile desc
+    jQuery('#more_desc').toggle(
+        function(){
+            jQuery(this).attr('title', '隐藏简介');
+            jQuery(this).find('i').addClass('icon-chevron-up').removeClass('icon-chevron-down');
+            if(jQuery('#desc_full').css('display') == 'none'){
+                // jQuery('#desc_s').hide();
+                jQuery('#desc_full').slideDown(150);
+            }
+        },
+        function(){
+            jQuery(this).attr('title', '查看简介');
+            jQuery(this).find('i').addClass('icon-chevron-down').removeClass('icon-chevron-up');
+            if(jQuery('#desc_full').css('display') == 'block'){
+                // jQuery('#desc_s').show();
+                jQuery('#desc_full').slideUp(150);
+            }
+        }
+    )
+
+    //change profile background image
+    jQuery('#change_background_img_btn').toggle(
+        function(){
+            jQuery(this).html('取消更改');
+            if(jQuery('#change_background_img_form').css('display') == 'none'){
+                jQuery('#change_background_img_form').fadeIn(200);
+            }
+        },
+        function(){
+            jQuery(this).html('更改背景图片');
+            if(jQuery('#change_background_img_form').css('display') == 'block'){
+                jQuery('#change_background_img_form').fadeOut(200);
+            }
+        }
+    )
+
+    //未登录时保存跳转连接到cookie
+    jQuery('#goLoginBtn a').click(function(){
+        var url =  window.location.href;
+        $.cookie('redirect_url', url, { expires: 7, path: '/'});
+        // window.location.href = '/';
+    })
     
 })
 
+// 过滤转义字符
+function toTxt(str){
+    var RexStr = /\<|\>|\"|\'|\&/g;
+    str = str.replace(RexStr,
+        function(MatchStr){
+            switch(MatchStr){
+                case "<":
+                    return "&lt;";
+                    break;
+                case ">":
+                    return "&gt;";
+                    break;
+                case "\"":
+                    return "&quot;";
+                    break;
+                case "'":
+                    return "&#39;";
+                    break;
+                case "&":
+                    return "&amp;";
+                    break;
+                default :
+                    break;
+            }
+        }
+    )
+    return str;
+}
 
 

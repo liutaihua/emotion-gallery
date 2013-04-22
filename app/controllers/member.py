@@ -8,6 +8,7 @@ import datetime
 
 from config import view, site_name
 from app.common import session
+from app.common.misc import replace_breaks
 from app.models import users, postModel, nodeModel, notification
 
 siteName = site_name
@@ -28,9 +29,6 @@ class member_home:
                 nodes += nodeModel.getNodesByNodeId(created_posts[i].nodeId)
             #得到资料
             profile = users.get_profile_by_user_id(u.id)
-            print 2222222222222222, u
-            if profile.bio:
-                profile.bio = re.sub('\n', ' ', profile.bio)
             #note 跳转到豆瓣
             # raise web.seeother('http://www.douban.com/people/'+ username)
             
@@ -90,8 +88,7 @@ class member_home:
                 ntf_list = None
                 ntf_posts = None
                 ntf_users = None
-            print 222222222222222, u
-            return view.base(view.member_home(u, profile, created_posts, nodes, user), user, siteName, rights, ntf_list, notification_num, ntf_posts, ntf_users)
+            return view.base(view.member_home(u, profile, created_posts, nodes, user, replace_breaks), user, siteName, rights, ntf_list, notification_num, ntf_posts, ntf_users)
         else:
             raise web.notfound()
 

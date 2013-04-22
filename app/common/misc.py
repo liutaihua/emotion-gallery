@@ -8,6 +8,10 @@
 
 import web, re, urlparse, datetime, urllib, utils, string, time, datetime
 
+# import HTMLParser
+
+# html_parser = HTMLParser.HTMLParser()
+
 def format_date(d, f):
     return d.strftime(f)
 
@@ -51,14 +55,17 @@ def text2html(s):
     return replace_links(s)
     
 def replace_breaks(s):
+    s = re.sub('\r', '<br />' ,s )
     return re.sub('\n', '<br />', s)
 
 def replace_indents(s):
     s = re.sub('\t', 4*' ', s)
     return re.sub('\s{2}', '&nbsp;'*2, s)
 
+# reg = "([a-zA-Z0-9:\/\])((http|https|ftp):\/\/)?([A-Za-z0-9-]+\.)+[A-Za-z]{2,}(:[0-9]+)?[.\/=\?%\-&_~`@[\]\':+!]*([^\"\"])*?(?![\/=\?%\-&_~`@[\]\':+!A-Za-z0-9.])"
+
 def replace_links(s):
-    return re.sub('(http://[^\s]+)', r'<a rel="nofollow" href="\1">' + get_nice_url(r'\1') + '</a>', s, re.I)
+    return re.sub('(http://[^\s]+)', r'<a rel="nofollow" href="\1">' + r'\1' + '</a>', s, re.M)
 
 # we may need to get months ago as well
 def how_long(d):
@@ -235,7 +242,12 @@ def xiami(value):
     else:
         return value
 
-        
+
+# via https://gist.github.com/dndn/859717
+#更深层次的过滤，类似instapaper或者readitlater这种服务，很有意思的研究课题
+##过滤HTML中的标签
+#将HTML中标签等信息去掉
+#@param htmlstr HTML字符串.
 def filter_tags(htmlstr):
     #先过滤CDATA
     re_cdata=re.compile('//<!\[CDATA\[[^>]*//\]\]>',re.I) #匹配CDATA
@@ -256,13 +268,17 @@ def filter_tags(htmlstr):
     s=replaceCharEntity(s)#替换实体
     return s
 
+##替换常用HTML字符实体.
+#使用正常的字符替换HTML中特殊的字符实体.
+#你可以添加新的实体字符到CHAR_ENTITIES中,处理更多HTML字符实体.
+#@param htmlstr HTML字符串.
 def replaceCharEntity(htmlstr):
     CHAR_ENTITIES={'nbsp':' ','160':' ',
                 'lt':'<','60':'<',
                 'gt':'>','62':'>',
                 'amp':'&','38':'&',
                 'quot':'"','34':'"',}
-
+    
     re_charEntity=re.compile(r'&#?(?P<name>\w+);')
     sz=re_charEntity.search(htmlstr)
     while sz:
@@ -276,3 +292,6 @@ def replaceCharEntity(htmlstr):
             htmlstr=re_charEntity.sub('',htmlstr,1)
             sz=re_charEntity.search(htmlstr)
     return htmlstr
+
+def repalce(s,re_exp,repl_string):
+    return re_exp.sub(repl_string,s)
