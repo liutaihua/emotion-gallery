@@ -64,8 +64,8 @@ urls = (
     # '/account/help',                                            'app.controllers.account.help',
     # '/account/check_username',                                  'app.controllers.account.check_username',
     '/account/check_email',                                     'app.controllers.account.check_email',
-    # '/account/landing_login',                                   'app.controllers.account.landing_login',
-    # '/account/landing_forgot',                                  'app.controllers.account.landing_forgot',
+    '/account/landing_login',                                   'app.controllers.account.landing_login',
+    '/account/landing_forgot',                                  'app.controllers.account.landing_forgot',
     # '/account/confirm/([0-9a-z]{32})',                          'app.controllers.account.confirm_email',
     '/account/apply_for_permission',                              'app.controllers.account.apply_for_permission',
 
