@@ -173,68 +173,65 @@ def to_basestring(value):
 class Douban:
     def GET(self):
         data = web.input()
-        if data.has_key('code'):
-            code = data.code
-            provider = 'douban'
-            d = config.APIKEY_DICT.get(provider)
-
-            login_service = None
-            if provider == config.OPENID_DOUBAN:
-                openid_type = config.OPENID_TYPE_DICT[config.OPENID_DOUBAN]
-                douban_login = DoubanLogin(d['key'], d['secret'], d['redirect_uri'])
-            token_dict = douban_login.get_access_token(code)
-            if not token_dict or not token_dict.get("access_token"):
-                return(401, "no_access_token")
-            user_info = douban_login.get_user_info(token_dict.get("access_token"), token_dict.get("uid"))
-
-            if user_info:
-                douban_id = user_info['id']
-                nickname = user_info[u'name']
-                avatarPath = user_info['avatar']
-
-                #判断邮箱激活表中是否有此豆瓣ID
-                if users.douban_id_exist_in_table_confirm_email(int(douban_id)):
-                    #如果此用户填写过email
-                    if users.get_confirm_email_by_douban_id(douban_id).email:
-                        info = users.get_confirm_email_by_douban_id(douban_id)
-                        c = info.confirmed
-                        #如果填写的邮箱已经验证
-                        if c == 1:
-                            #更新用户邮箱 和 昵称 等资料
-                            users.update_user_by_douid(
-                                douban_id,
-                                nickname = nickname,
-                                avatarPath = avatarPath,
-                                nicknameChangeTime = datetime.datetime.now(),
-                                lastLoginIP = web.ctx.ip,
-                                lastLoginTime = datetime.datetime.now()
-                            )
-                            last_user_id = users.get_douban_user_by_doubanid(douban_id).id
-                            city = user_info.get('loc_name')
-                            desc = user_info.get('desc')
-                            users.update_profile(last_user_id, city = city, bio = desc )
-                            session.douban_login(douban_id)
-                            raise web.seeother(session.get_last_visited_url())
-                        elif c == 0:
-                            session.douban_callback(user_info)
-                            #返回 提醒用户需要激活邮件 的页面
-                            raise web.seeother('/welcome/'+ user_info['uid'] +'/send_email_feedback?status=succesful')
-                    #如果没填写email
-                    else:
-                        session.douban_callback(user_info)
-                        #删除表中的记录 为了一会儿重新insert
-                        users.del_verification_data_by_douban_id(douban_id)
-                        #跳转到邮箱设置页面
-                        raise web.seeother('/welcome/'+ user_info['uid'])
-                #如果是新用户
-                else:
-                    session.douban_callback(user_info)
-                    #跳转到邮箱设置页面
-                    raise web.seeother('/welcome/'+ user_info['uid'])
-            else:
-                return view.error404('Connection failed')
-        else:
+        if 'code' not in data:
             return view.error404('Connection failed')
+
+        code = data.code
+        provider = 'douban'
+        d = config.APIKEY_DICT.get(provider)
+        if provider == config.OPENID_DOUBAN:
+            openid_type = config.OPENID_TYPE_DICT[config.OPENID_DOUBAN]
+            douban_login = DoubanLogin(d['key'], d['secret'], d['redirect_uri'])
+        token_dict = douban_login.get_access_token(code)
+        if not token_dict or not token_dict.get("access_token"):
+            return(401, "no_access_token")
+
+        user_info = douban_login.get_user_info(token_dict.get("access_token"), token_dict.get("uid"))
+        if not user_info:
+            return view.error404('Connection failed')
+
+        douban_id = user_info['id']
+        nickname = user_info[u'name']
+        avatarPath = user_info['avatar']
+
+        #判断邮箱激活表中是否有此豆瓣ID
+        if users.douban_id_exist_in_table_confirm_email(int(douban_id)):
+            #如果此用户填写过email
+            if users.get_confirm_email_by_douban_id(douban_id).email:
+                info = users.get_confirm_email_by_douban_id(douban_id)
+                #如果填写的邮箱已经验证
+                if info.confirmed:
+                    #更新用户邮箱 和 昵称 等资料
+                    users.update_user_by_douid(
+                        douban_id,
+                        nickname = nickname,
+                        avatarPath = avatarPath,
+                        nicknameChangeTime = datetime.datetime.now(),
+                        lastLoginIP = web.ctx.ip,
+                        lastLoginTime = datetime.datetime.now()
+                    )
+                    last_user_id = users.get_douban_user_by_doubanid(douban_id).id
+                    city = user_info.get('loc_name')
+                    desc = user_info.get('desc')
+                    users.update_profile(last_user_id, city = city, bio = desc )
+                    session.douban_login(douban_id)
+                    raise web.seeother(session.get_last_visited_url())
+                elif c == 0:
+                    session.douban_callback(user_info)
+                    #返回 提醒用户需要激活邮件 的页面
+                    raise web.seeother('/welcome/'+ user_info['uid'] +'/send_email_feedback?status=succesful')
+            #如果没填写email
+            else:
+                session.douban_callback(user_info)
+                #删除表中的记录 为了一会儿重新insert
+                users.del_verification_data_by_douban_id(douban_id)
+                #跳转到邮箱设置页面
+                raise web.seeother('/welcome/'+ user_info['uid'])
+        #如果是新用户
+        else:
+            session.douban_callback(user_info)
+            #跳转到邮箱设置页面
+            raise web.seeother('/welcome/'+ user_info['uid'])
 
 #connect_douban
 class connect_douban:

@@ -19,7 +19,7 @@ class index:
         # foo = web.cookies(cookieName=defaultValue)
         # foo.age
         #if user.is_logged:
-        if True:
+        if True: # 全部开放
             rec_posts = admin.get_rec_posts()
             postList = []
             # if len(rec_posts) > 20:
