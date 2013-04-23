@@ -42,22 +42,22 @@ register_form = form.Form(
         lambda x: users.is_username_available(x)),
         #form.Validator('请以字母开头，不超过15个字母、数字，保存后不可修改', #todo
         #lambda x: users.is_username_available(x)),
-        description='用户名(以字母开头的2-16个字母、数字组合):'),
+        description='', placeholder="用户名(字母开头的2-16个组合)"),
 
     form.Textbox('email', 
         form.notnull, vemail,
         form.Validator('邮箱已经存在.', 
         lambda x: users.is_email_available(x)),
-        description='邮箱:'),
+        description='', placeholder="邮箱"),
 
     form.Password('password', 
         form.notnull,
         form.Validator('密码不能少于6个字符.', 
         lambda x: users.is_valid_password(x)),
-        description='密码:'),
+        description='', placeholder="密码"),
     form.Textbox('nickname', 
         form.notnull,
-        description='昵称:'),
+        description='', placeholder="给自己起一个名号"),
 )
 
 forgot_password_form = form.Form(
